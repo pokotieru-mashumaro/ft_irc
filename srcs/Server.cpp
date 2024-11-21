@@ -7,9 +7,9 @@ Server::Server(int port, std::string password)
 	_socket_fd = -1;
 	(void)_channels;
 
-	//client
+	// client
 	setCommand("NICK", &Client::nick);
-    setCommand("USER", &Client::user);
+	setCommand("USER", &Client::user);
 }
 
 void Server::setCommand(std::string command, function fun)
@@ -60,7 +60,26 @@ void Server::CloseFds()
 	}
 }
 
-void Server::ReceiveNewData(int fd)
+void Server::SendMsg2Client(int cli_fd, std::string str)
+{
+	str = str + + "\r\n";
+	ssize_t bytes = send(cli_fd, str.c_str(), str.length(), 0);
+	if (bytes == -1)
+		std::cout << RED << "やばいよやばいよ" << WHI << std::endl;
+}
+
+void Server::execute(Client *client, std::string command, std::string param)
+{
+
+	function fun = _commands[command];
+
+	if (!fun)
+	    SendMsg2Client(client->getFd(), RPL_SYNTAXERROR("Channels name must start with '#'."));
+	else
+		(fun)(this, client, param);
+}
+
+void Server::ReceiveNewData(int fd, int i)
 {
 	char buff[1024];
 	ssize_t bytes;
@@ -77,7 +96,29 @@ void Server::ReceiveNewData(int fd)
 	{
 		buff[bytes] = '\0';
 		std::cout << YEL << "Client <" << fd << "> Data: " << WHI << buff;
-		// ここに色々な処理
+		// std::cout << YEL << "i <" << i << WHI << buff;
+		// std::cout << YEL << "_clients[i].fd <" << _clients[i]->getFd() << WHI << buff;
+		std::string str = buff;
+		size_t spaceIndex = str.find(' ');
+
+		if (spaceIndex != std::string::npos)
+		{
+			std::string command = str.substr(0, spaceIndex);
+			std::string param = str.substr(spaceIndex + 1);
+			std::transform(command.begin(), command.end(), command.begin(), ::toupper);
+			param = trim(param);
+			std::cout << RED << "HIIIIIIIIIIIIIIII" << WHI << std::endl;
+			std::cout << "cli fd: " << _clients[i]->getFd() << std::endl;
+			execute(_clients[i], command, param);
+		}
+		else
+		{
+			//
+		}
+
+		// こんなのが必要な可能性あり チャッピー曰く
+		//  _fds[i].events = POLLIN | POLLHUP;
+		//  _fds[i].revents = 0;
 	}
 }
 
@@ -154,7 +195,7 @@ void Server::ServerInit()
 				if (_fds[i].fd == _socket_fd)
 					AcceptNewClient();
 				else
-					ReceiveNewData(_fds[i].fd);
+					ReceiveNewData(_fds[i].fd, i-1); //i-1: _fdsの先頭はサーバーのfd、_clientsの先頭はclientだから一つ詰まっている
 			}
 		}
 	}

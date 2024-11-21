@@ -25,12 +25,15 @@ public:
 	void ServerInit();
 	void SerSocket();
 	void AcceptNewClient();
-	void ReceiveNewData(int fd);
+	void ReceiveNewData(int fd, int i);
 
 	static void SignalHandler(int signum);
 
 	void CloseFds();
 	void ClearClients(int fd);
+
+	void SendMsg2Client(int cli_fd, std::string str);
+	void execute(Client *client, std::string command, std::string param);
 
 
 	std::vector<std::string> getChannelNames();

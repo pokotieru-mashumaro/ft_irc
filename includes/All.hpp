@@ -13,6 +13,7 @@
 #include <poll.h>
 #include <csignal>
 
+#include "Utils.hpp"
 #include "Channel.hpp"
 #include "Client.hpp"
 #include "Server.hpp"

@@ -7,5 +7,6 @@
 #define YEL "\e[1;33m"
 
 
+#define RPL_SYNTAXERROR(message) std::string("ERROR Invalid command syntax. " + std::string(message))
 
 #endif

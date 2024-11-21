@@ -1,5 +1,5 @@
 NAME		=	a.out
-SRCS		=	$(wildcard ./srcs/*.cpp) $(wildcard ./srcs/command/*.cpp)
+SRCS		=	$(wildcard ./srcs/*.cpp) $(wildcard ./srcs/command/*.cpp) $(wildcard ./srcs/utils/*.cpp)
 INC_DIR        =    ./includes
 CC            =    c++
 CFLAGS        =    -Wall -Wextra -Werror -std=c++98
