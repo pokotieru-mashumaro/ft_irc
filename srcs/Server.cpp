@@ -17,6 +17,17 @@ Server::Server(int port, std::string password)
 	//channel
 }
 
+std::vector<std::string> Server::getNickNames()
+{
+	std::vector<std::string> ret;
+
+	for (size_t i = 0; i < _clients.size(); i++)
+	{
+		ret.push_back(_clients[i]->getNickName());
+	}
+	return ret;
+}
+
 void Server::setCommand(std::string command, function fun)
 {
 	_commands.insert(std::pair<std::string, function>(command, fun));

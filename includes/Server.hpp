@@ -36,6 +36,7 @@ public:
 	void execute(Client *client, std::string command, std::string param);
 
 
+	std::vector<std::string> getNickNames();
 	std::vector<std::string> getChannelNames();
 
 	void setCommand(std::string command, function fun);
