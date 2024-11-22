@@ -67,6 +67,9 @@
         "text_encoding": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "map": "cpp"
     }
 }

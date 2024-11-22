@@ -7,9 +7,14 @@ Server::Server(int port, std::string password)
 	_socket_fd = -1;
 	(void)_channels;
 
+	// server
+	setCommand("CAP", &Server::cap);
+
 	// client
 	setCommand("NICK", &Client::nick);
 	setCommand("USER", &Client::user);
+
+	//channel
 }
 
 void Server::setCommand(std::string command, function fun)
@@ -99,22 +104,20 @@ void Server::ReceiveNewData(int fd, int i)
 		// std::cout << YEL << "i <" << i << WHI << buff;
 		// std::cout << YEL << "_clients[i].fd <" << _clients[i]->getFd() << WHI << buff;
 		std::string str = buff;
+		std::string command = trim(str);
+		std::string param = "";
 		size_t spaceIndex = str.find(' ');
 
 		if (spaceIndex != std::string::npos)
 		{
-			std::string command = str.substr(0, spaceIndex);
-			std::string param = str.substr(spaceIndex + 1);
+			command = str.substr(0, spaceIndex);
+			param = str.substr(spaceIndex + 1);
 			std::transform(command.begin(), command.end(), command.begin(), ::toupper);
 			param = trim(param);
-			std::cout << RED << "HIIIIIIIIIIIIIIII" << WHI << std::endl;
-			std::cout << "cli fd: " << _clients[i]->getFd() << std::endl;
-			execute(_clients[i], command, param);
 		}
 		else
-		{
-			//
-		}
+			param = "";
+		execute(_clients[i], command, param);
 
 		// こんなのが必要な可能性あり チャッピー曰く
 		//  _fds[i].events = POLLIN | POLLHUP;

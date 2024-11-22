@@ -39,5 +39,7 @@ public:
 	std::vector<std::string> getChannelNames();
 
 	void setCommand(std::string command, function fun);
+
+	static void cap(Server *server, Client *client, std::string param);
 };
 #endif
