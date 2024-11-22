@@ -15,28 +15,12 @@
 #define NICK_ERROR2(nickname) std::string(":" + SERVER_NAME + " 433 * " + nickname + " :Nickname already in use")
 
 static bool contains_ng_ascii(const std::string& str) {
-    size_t flag = 0;
-    flag = str.find('@');
-    if (flag != std::string::npos)
-        return true;
-    flag = str.find(' ');
-    if (flag != std::string::npos)
-        return true;
-    flag = str.find('#');
-    if (flag != std::string::npos)
-        return true;
-    flag = str.find(':');
-    if (flag != std::string::npos)
-        return true;
-    flag = str.find('!');
-    if (flag != std::string::npos)
-        return true;
-    flag = str.find('%');
-    if (flag != std::string::npos)
-        return true;
-    flag = str.find('&');
-    if (flag != std::string::npos)
-        return true;
+    for (int i = 0; i < (int)str.size(); ++i)
+    {
+        char ch = str[i];
+        if (!isalnum(ch))
+            return true;
+    }
     return false;
 }
 
@@ -55,11 +39,11 @@ static bool is_duplicate_nickname(Server *server, std::string param)
 
 void Client::nick(Server *server, Client *client, std::string param)
 {
-    std::cout << "param:" << param << std::endl;
+    // std::cout << "param:" << param << std::endl;
     size_t spaceIndex = param.find(' ');
 
     if (param == "" || spaceIndex != std::string::npos)
-        server->SendMsg2Client(client->getFd(), SYNTAX_ERROR("NICK"));
+        server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "NICK"));
     else if (contains_ng_ascii(param))
         server->SendMsg2Client(client->getFd(), NICK_ERROR1(param));
     else if (is_duplicate_nickname(server, param))

@@ -15,6 +15,7 @@ Server::Server(int port, std::string password)
 	setCommand("USER", &Client::user);
 
 	//channel
+	setCommand("JOIN", &Channel::join);
 }
 
 std::vector<std::string> Server::getNickNames()

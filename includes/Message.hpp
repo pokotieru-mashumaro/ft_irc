@@ -15,6 +15,6 @@
 #define RPL_SYNTAXERROR(message) std::string("ERROR Invalid command syntax. " + std::string(message))
 
 
-#define SYNTAX_ERROR(command) std::string(":" + SERVER_NAME + " 461 * " + command + " :Syntax error" )
+#define SYNTAX_ERROR(nickname, command) std::string(":" + SERVER_NAME + " 461 " + nickname + " " + command + " :Syntax error" )
 
 #endif

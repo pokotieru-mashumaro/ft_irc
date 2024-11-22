@@ -18,6 +18,7 @@ private:
 	std::string _ipadd;
 	std::string _nickname;
 	std::string _username;
+	std::string _realname;
 	Channel *_nowchannel;
 
 	Client();
@@ -29,12 +30,14 @@ public:
 	int getStatus() const {return _status;}
 	std::string getNickName() const {return _nickname;}
 	std::string getUserName() const {return _username;}
+	std::string getRealName() const {return _realname;}
 	Channel *getChannel() const {return _nowchannel;}
 
 	void setStatus(int status){_status = status;}
 	void setIpAdd(std::string ipadd){_ipadd = ipadd;}
 	void setNickName(std::string nickname){_nickname = nickname;}
 	void setUserName(std::string username){_username = username;}
+	void setRealName(std::string realname){_realname = realname;}
 	void setChannel(Channel *channel){_nowchannel = channel;}
 
 	static void pass(Server *server, Client *client, std::string param);

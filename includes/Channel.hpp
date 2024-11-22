@@ -26,6 +26,8 @@ public:
     void setName(std::string name) {_name = name;};
     void setClient(Client *cli){_clients.push_back(cli);};
 
+    static void join(Server *server, Client *client, std::string param);
+
     void kick();
     void invite();
     void topic();
