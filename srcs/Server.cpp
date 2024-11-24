@@ -30,6 +30,16 @@ std::vector<std::string> Server::getNickNames()
 	return ret;
 }
 
+Channel *Server::getChannel(std::string channelname)
+{
+	for (size_t i = 0; i < _channels.size(); i++)
+	{
+		if (channelname == _channels[i]->getName())
+			return _channels[i];
+	}
+	return NULL;
+}
+
 void Server::setCommand(std::string command, function fun)
 {
 	_commands.insert(std::pair<std::string, function>(command, fun));
@@ -116,16 +126,14 @@ void Server::ReceiveNewData(int fd, int i)
 		buff[bytes] = '\0';
 		std::cout << YEL << "Client <" << fd << "> Data: " << WHI << buff;
 
-
 		std::string str = buff;
 		std::vector<std::string> lines = split_string(str, '\n');
 
-
-		std::cout << "lines--------------------\n";
-		for (size_t j = 0; j < lines.size(); j++)
-		{
-			std::cout << "line:" << lines[i] << std::endl;
-		}
+		// std::cout << "lines--------------------\n";
+		// for (size_t j = 0; j < lines.size(); j++)
+		// {
+		// 	std::cout << "line:" << lines[i] << std::endl;
+		// }
 
 		for (size_t j = 0; j < lines.size(); j++)
 		{

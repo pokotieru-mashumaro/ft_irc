@@ -38,6 +38,7 @@ public:
 	std::string getPassword(){return _password;};
 	std::vector<std::string> getNickNames();
 	std::vector<std::string> getChannelNames();
+	Channel *getChannel(std::string channelname);
 
 	void setCommand(std::string command, function fun);
 

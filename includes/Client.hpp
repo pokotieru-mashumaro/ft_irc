@@ -17,6 +17,7 @@ private:
 	int _status;
 	std::string _ipadd;
 	bool _is_passed;
+	bool _is_operator;
 	std::string _nickname;
 	std::string _username;
 	std::string _realname;
@@ -34,11 +35,13 @@ public:
 	std::string getNickName() const {return _nickname;}
 	std::string getUserName() const {return _username;}
 	std::string getRealName() const {return _realname;}
+	bool getIsOperator(){return _is_operator;}
 	Channel *getChannel() const {return _nowchannel;}
 
 	void setStatus(int status){_status = status;}
 	void setIpAdd(std::string ipadd){_ipadd = ipadd;}
 	void setIsPassed(bool is_passed){_is_passed = is_passed;}
+	void setIsOperator(bool is_operator){_is_operator = is_operator;}
 	void setNickName(std::string nickname){_nickname = nickname;}
 	void setUserName(std::string username){_username = username;}
 	void setRealName(std::string realname){_realname = realname;}
