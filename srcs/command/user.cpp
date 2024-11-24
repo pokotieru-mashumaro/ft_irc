@@ -16,7 +16,7 @@ void Client::user(Server *server, Client *client, std::string param)
 
     params = split_string(param, ' ');
     if (params.size() != 4)
-        server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "USER"));
+        return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "USER"));
     
     client->setUserName(params[0]);
     client->setRealName(params[3]);

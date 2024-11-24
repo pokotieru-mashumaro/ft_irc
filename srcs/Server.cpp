@@ -11,10 +11,11 @@ Server::Server(int port, std::string password)
 	setCommand("CAP", &Server::cap);
 
 	// client
+	setCommand("PASS", &Client::pass);
 	setCommand("NICK", &Client::nick);
 	setCommand("USER", &Client::user);
 
-	//channel
+	// channel
 	setCommand("JOIN", &Channel::join);
 }
 
@@ -79,7 +80,7 @@ void Server::CloseFds()
 
 void Server::SendMsg2Client(int cli_fd, std::string str)
 {
-	str = str + + "\r\n";
+	str = str + +"\r\n";
 	ssize_t bytes = send(cli_fd, str.c_str(), str.length(), 0);
 	if (bytes == -1)
 		std::cout << RED << "やばいよやばいよ" << WHI << std::endl;
@@ -89,8 +90,8 @@ void Server::execute(Client *client, std::string command, std::string param)
 {
 	function fun = _commands[command];
 
-	if (!fun && (client->getNickName() == "" || client->getUserName() == ""))
-	    return;
+	if (!fun && !client->isConnected())
+		return;
 	else if (!fun)
 		SendMsg2Client(client->getFd(), NOT_COMMAND_ERROR(client->getNickName(), command));
 	else
@@ -114,21 +115,33 @@ void Server::ReceiveNewData(int fd, int i)
 	{
 		buff[bytes] = '\0';
 		std::cout << YEL << "Client <" << fd << "> Data: " << WHI << buff;
-		// std::cout << YEL << "i <" << i << WHI << buff;
-		// std::cout << YEL << "_clients[i].fd <" << _clients[i]->getFd() << WHI << buff;
+
+
 		std::string str = buff;
-		std::string command = trim(str);
-		std::string param = "";
-		size_t spaceIndex = str.find(' ');
+		std::vector<std::string> lines = split_string(str, '\n');
 
-		if (spaceIndex != std::string::npos)
+
+		std::cout << "lines--------------------\n";
+		for (size_t j = 0; j < lines.size(); j++)
 		{
-			command = str.substr(0, spaceIndex);
-			param = str.substr(spaceIndex + 1);
-			param = trim(param);
+			std::cout << "line:" << lines[i] << std::endl;
 		}
-		execute(_clients[i], command, param);
 
+		for (size_t j = 0; j < lines.size(); j++)
+		{
+
+			std::string command = trim(lines[j]);
+			std::string param = "";
+			size_t spaceIndex = lines[j].find(' ');
+
+			if (spaceIndex != std::string::npos)
+			{
+				command = lines[j].substr(0, spaceIndex);
+				param = lines[j].substr(spaceIndex + 1);
+				param = trim(param);
+			}
+			execute(_clients[i], command, param);
+		}
 		// こんなのが必要な可能性あり チャッピー曰く
 		//  _fds[i].events = POLLIN | POLLHUP;
 		//  _fds[i].revents = 0;
@@ -208,7 +221,7 @@ void Server::ServerInit()
 				if (_fds[i].fd == _socket_fd)
 					AcceptNewClient();
 				else
-					ReceiveNewData(_fds[i].fd, i-1); //i-1: _fdsの先頭はサーバーのfd、_clientsの先頭はclientだから一つ詰まっている
+					ReceiveNewData(_fds[i].fd, i - 1); // i-1: _fdsの先頭はサーバーのfd、_clientsの先頭はclientだから一つ詰まっている
 			}
 		}
 	}

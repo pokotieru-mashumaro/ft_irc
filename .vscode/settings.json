@@ -70,6 +70,7 @@
         "deque": "cpp",
         "__hash_table": "cpp",
         "__tree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "__node_handle": "cpp"
     }
 }

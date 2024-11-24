@@ -12,20 +12,22 @@ std::string trim(std::string str)
 
 std::vector<std::string> split_string(std::string str, char c)
 {
-    std::vector<std::string> words;
-    std::string::size_type start = 0;
-    std::string::size_type end = str.find(c);
+    std::vector<std::string> elems;
+	std::string item;
 
-    while (end != std::string::npos) 
-    {
-        words.push_back(str.substr(start, end - start));
-        start = end + 1;
-        end = str.find(c, start);
-    }
-
-    words.push_back(str.substr(start));
-
-    return words;
+	for (size_t i = 0; i < str.length(); i++) {
+		if (str[i] == c) {
+			if (!item.empty())
+				elems.push_back(item);
+			item.clear();
+		}
+		else {
+			item += str[i];
+		}
+	}
+	if (!item.empty())
+		elems.push_back(item);
+	return elems;
 }
 
 // int main() 

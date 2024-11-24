@@ -35,7 +35,7 @@ public:
 	void SendMsg2Client(int cli_fd, std::string str);
 	void execute(Client *client, std::string command, std::string param);
 
-
+	std::string getPassword(){return _password;};
 	std::vector<std::string> getNickNames();
 	std::vector<std::string> getChannelNames();
 
