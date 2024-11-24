@@ -91,7 +91,7 @@ void Server::execute(Client *client, std::string command, std::string param)
 	function fun = _commands[command];
 
 	if (!fun)
-	    SendMsg2Client(client->getFd(), RPL_SYNTAXERROR("Channels name must start with '#'."));
+	    return;
 	else
 		(fun)(this, client, param);
 }
