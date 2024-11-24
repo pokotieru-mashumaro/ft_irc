@@ -16,3 +16,4 @@ void Server::cap(Server *server, Client *client, std::string param)
         server->SendMsg2Client(client->getFd(), "CAP * ACK :multi-prefix");
     else if (param == "END")
         server->SendMsg2Client(client->getFd(), RPL_WELCOME(client->getNickName()));
+}

@@ -87,11 +87,12 @@ void Server::SendMsg2Client(int cli_fd, std::string str)
 
 void Server::execute(Client *client, std::string command, std::string param)
 {
-
 	function fun = _commands[command];
 
-	if (!fun)
+	if (!fun && (client->getNickName() == "" || client->getUserName() == ""))
 	    return;
+	else if (!fun)
+		SendMsg2Client(client->getFd(), NOT_COMMAND_ERROR(client->getNickName(), command));
 	else
 		(fun)(this, client, param);
 }
@@ -124,11 +125,8 @@ void Server::ReceiveNewData(int fd, int i)
 		{
 			command = str.substr(0, spaceIndex);
 			param = str.substr(spaceIndex + 1);
-			std::transform(command.begin(), command.end(), command.begin(), ::toupper);
 			param = trim(param);
 		}
-		else
-			param = "";
 		execute(_clients[i], command, param);
 
 		// こんなのが必要な可能性あり チャッピー曰く
