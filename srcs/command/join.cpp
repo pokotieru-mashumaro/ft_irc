@@ -11,6 +11,9 @@ paramの先頭に#がないとき "JOIN hello" "JOIN hello oo"
 
 :naishomarunosukenomacbook-air.local 353 wedrf = #sample :wedrf @kkomatsu
 
+JOIN #123
+JOIN #123
+複数回入ってもエラーは返さない。何も返さない。
 
 他の人が参加したら同チャンネルにいるクライアントにメッセージを送信
 :saki!~myusername@localhost JOIN :#sample
@@ -29,12 +32,27 @@ static std::string getNicknames(Channel *channel)
 
     for (size_t i = clients.size() - 1; i > 0; i--)
     {
-        if (clients[i]->getIsOperator())
+        if (channel->is_operator(clients[i]))
             ret += "@";
         ret += clients[i]->getNickName();
         ret += " ";
     }
+    if (channel->is_operator(clients[0]))
+        ret += "@";
+    ret += clients[0]->getNickName();
     return ret;
+}
+
+static bool is_already_exist(Server *server, std::string name)
+{
+    std::vector<Channel *> channels = server->getChannels();
+
+    for (size_t i = 0; i < channels.size(); i++)
+    {
+        if (channels[i]->getName() == name)
+            return true;
+    }
+    return false;
 }
 
 void Channel::join(Server *server, Client *client, std::string param)
@@ -52,14 +70,18 @@ void Channel::join(Server *server, Client *client, std::string param)
     Channel *channel = server->getChannel(params[0]);
     if (channel == NULL)
     {
-        channel = new Channel(client, params[0]);
+        channel = new Channel(params[0]);
         server->setChannels(channel);
+
+        channel->setOperator(client);
     }
     if (params.size() == 2)
         channel->setPassword(params[1]);
+    if (is_already_exist(server, params[1]))
+        return;
 
-    channel->setName(params[0]);
     channel->setClient(client);
+    channel->setName(params[0]);
 
     server->SendMsg2Client(client->getFd(), JOIN_SUCCESS1(client->getNickName(), client->getUserName(), param));
     server->SendMsg2Client(client->getFd(), JOIN_SUCCESS2(client->getNickName(), param, getNicknames(channel)));

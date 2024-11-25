@@ -44,6 +44,8 @@ public:
 	void setCommand(std::string command, function fun);
 	void setChannels(Channel *channel) {_channels.push_back(channel);};
 
+	void unsetChannel(Channel *channel);
+
 	static void cap(Server *server, Client *client, std::string param);
 };
 #endif

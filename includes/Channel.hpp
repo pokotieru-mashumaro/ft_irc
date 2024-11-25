@@ -12,7 +12,7 @@ private:
     std::vector<Client *> _clients;
 
 public:
-	Channel(Client *owner, std::string name);
+	Channel(std::string name);
 
     // Client getOperator(){return _operator;};
     std::string getName() const {return _name;};
@@ -23,8 +23,12 @@ public:
     void setName(std::string name) {_name = name;};
     void setPassword(std::string pass) {_password = pass;};
     void setClient(Client *cli){_clients.push_back(cli);};
+    void setOperator(Client *cli){_operators.push_back(cli);};
 
-    void delete_client(Server *server, Client *client);
+    void unsetClient(Client *cli);
+    void unsetOperaor(Client *cli);
+
+    bool is_operator(Client *client);
 
     static void join(Server *server, Client *client, std::string param);
     static void part(Server *server, Client *client, std::string param);

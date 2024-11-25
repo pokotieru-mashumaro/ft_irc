@@ -47,6 +47,18 @@ void Server::setCommand(std::string command, function fun)
 	_commands.insert(std::pair<std::string, function>(command, fun));
 }
 
+void Server::unsetChannel(Channel *channel)
+{
+	for (std::vector<Channel *>::iterator it = _channels.begin(); it != _channels.end(); ++it) 
+    {
+        if (*it == channel) 
+        {
+            _channels.erase(it);
+            break;
+        }
+    }
+}
+
 void Server::ClearClients(int fd)
 {
 	for (size_t i = 0; i < _fds.size(); i++)
