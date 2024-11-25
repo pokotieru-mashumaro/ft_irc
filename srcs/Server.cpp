@@ -17,6 +17,8 @@ Server::Server(int port, std::string password)
 
 	// channel
 	setCommand("JOIN", &Channel::join);
+	setCommand("PART", &Channel::part);
+
 }
 
 std::vector<std::string> Server::getNickNames()

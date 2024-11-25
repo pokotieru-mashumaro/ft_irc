@@ -24,7 +24,10 @@ public:
     void setPassword(std::string pass) {_password = pass;};
     void setClient(Client *cli){_clients.push_back(cli);};
 
+    void delete_client(Server *server, Client *client);
+
     static void join(Server *server, Client *client, std::string param);
+    static void part(Server *server, Client *client, std::string param);
 
     void kick();
     void invite();

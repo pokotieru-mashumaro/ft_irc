@@ -17,5 +17,5 @@
 
 #define SYNTAX_ERROR(nickname, command) std::string(":" + SERVER_NAME + " 461 " + nickname + " " + command + " :Syntax error" )
 #define NOT_COMMAND_ERROR(nickname, command) std::string(":" + SERVER_NAME + " 421 " + nickname + " " + command + " :Unknown command")
-
+#define NOT_CONNECT(nickname) std::string(":" + SERVER_NAME + " 451 " + nickname + " :Connection not registered")
 #endif

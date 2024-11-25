@@ -8,11 +8,10 @@ Client::Client(int fd)
     _nickname = "*";
     _username = "";
     _fd = fd;
-    _nowchannel = NULL;
+    // _nowchannel = NULL;
 };
 
 bool Client::isConnected()
 {
-    std::cout << "isConnect:" <<  !(!_is_passed || _nickname == "" || _username == "") << std::endl;
-    return !(!_is_passed || _nickname == "" || _username == "");
+    return !(!_is_passed || _nickname == "*" || _username == "");
 }

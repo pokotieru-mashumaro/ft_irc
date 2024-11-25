@@ -36,11 +36,13 @@ public:
 	void execute(Client *client, std::string command, std::string param);
 
 	std::string getPassword(){return _password;};
+	std::vector<Channel *> getChannels(){return _channels;};
 	std::vector<std::string> getNickNames();
 	std::vector<std::string> getChannelNames();
 	Channel *getChannel(std::string channelname);
 
 	void setCommand(std::string command, function fun);
+	void setChannels(Channel *channel) {_channels.push_back(channel);};
 
 	static void cap(Server *server, Client *client, std::string param);
 };

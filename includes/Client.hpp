@@ -21,7 +21,6 @@ private:
 	std::string _nickname;
 	std::string _username;
 	std::string _realname;
-	Channel *_nowchannel;
 
 	Client();
 
@@ -36,7 +35,7 @@ public:
 	std::string getUserName() const {return _username;}
 	std::string getRealName() const {return _realname;}
 	bool getIsOperator(){return _is_operator;}
-	Channel *getChannel() const {return _nowchannel;}
+	// Channel *getChannel() const {return _nowchannel;}
 
 	void setStatus(int status){_status = status;}
 	void setIpAdd(std::string ipadd){_ipadd = ipadd;}
@@ -45,7 +44,7 @@ public:
 	void setNickName(std::string nickname){_nickname = nickname;}
 	void setUserName(std::string username){_username = username;}
 	void setRealName(std::string realname){_realname = realname;}
-	void setChannel(Channel *channel){_nowchannel = channel;}
+	// void setChannel(Channel *channel){_nowchannel = channel;}
 
 	static void pass(Server *server, Client *client, std::string param);
 	static void nick(Server *server, Client *client, std::string param);
