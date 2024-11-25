@@ -33,6 +33,7 @@ public:
 	void ClearClients(int fd);
 
 	void SendMsg2Client(int cli_fd, std::string str);
+	void SendMsg2Channnel(Client  *client, Channel *channel, std::string str);
 	void execute(Client *client, std::string command, std::string param);
 
 	std::string getPassword(){return _password;};

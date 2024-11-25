@@ -43,13 +43,13 @@ static std::string getNicknames(Channel *channel)
     return ret;
 }
 
-static bool is_already_exist(Server *server, std::string name)
+static bool is_already_exist_client(Channel *channel, std::string client_name)
 {
-    std::vector<Channel *> channels = server->getChannels();
+    std::vector<Client *> clients = channel->getClients();
 
-    for (size_t i = 0; i < channels.size(); i++)
+    for (size_t i = 0; i < clients.size(); i++)
     {
-        if (channels[i]->getName() == name)
+        if (clients[i]->getNickName() == client_name)
             return true;
     }
     return false;
@@ -77,13 +77,15 @@ void Channel::join(Server *server, Client *client, std::string param)
     }
     if (params.size() == 2)
         channel->setPassword(params[1]);
-    if (is_already_exist(server, params[1]))
+    if (is_already_exist_client(channel, client->getNickName()))
         return;
 
     channel->setClient(client);
     channel->setName(params[0]);
 
-    server->SendMsg2Client(client->getFd(), JOIN_SUCCESS1(client->getNickName(), client->getUserName(), param));
-    server->SendMsg2Client(client->getFd(), JOIN_SUCCESS2(client->getNickName(), param, getNicknames(channel)));
-    server->SendMsg2Client(client->getFd(), JOIN_SUCCESS3(client->getNickName(), param));
+    server->SendMsg2Channnel(client, channel, JOIN_OTHER_CLIENT(client->getNickName(), client->getUserName(), channel->getName()));
+
+    server->SendMsg2Client(client->getFd(), JOIN_SUCCESS1(client->getNickName(), client->getUserName(), params[0]));
+    server->SendMsg2Client(client->getFd(), JOIN_SUCCESS2(client->getNickName(), params[0], getNicknames(channel)));
+    server->SendMsg2Client(client->getFd(), JOIN_SUCCESS3(client->getNickName(), params[0]));
 }

@@ -34,7 +34,6 @@ static bool is_not_join(Channel *channel, std::string nickname)
     return true;
 }
 
-
 void Channel::part(Server *server, Client *client, std::string param)
 {
     std::vector<std::string> params;
@@ -59,5 +58,7 @@ void Channel::part(Server *server, Client *client, std::string param)
         delete channel;
     }
     std::string message = params.size() == 2 ? params[1] : "";
-    return server->SendMsg2Client(client->getFd(), PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
+
+    server->SendMsg2Channnel(client, channel, PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
+    server->SendMsg2Client(client->getFd(), PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
 }
