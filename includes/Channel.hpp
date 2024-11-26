@@ -28,15 +28,16 @@ public:
     void unsetClient(Client *cli);
     void unsetOperaor(Client *cli);
 
+    bool is_exist(Client *client);
     bool is_operator(Client *client);
 
     static void join(Server *server, Client *client, std::string param);
     static void part(Server *server, Client *client, std::string param);
+    static void mode(Server *server, Client *client, std::string param);
 
     void kick();
     void invite();
     void topic();
-    void mode(int mode);
 };
 
 #endif

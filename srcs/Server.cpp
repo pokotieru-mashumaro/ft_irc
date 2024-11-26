@@ -15,7 +15,7 @@ Server::Server(int port, std::string password)
 	setCommand("NICK", &Client::nick);
 	setCommand("USER", &Client::user);
 	setCommand("PRIVMSG", &Client::privmsg);
-	setCommand("QUIT", &Client::quit);
+	// setCommand("QUIT", &Client::quit);
 
 	// channel
 	setCommand("JOIN", &Channel::join);

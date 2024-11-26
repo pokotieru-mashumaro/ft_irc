@@ -30,6 +30,16 @@ void Channel::unsetOperaor(Client *cli)
     }
 }
 
+bool Channel::is_exist(Client *client)
+{
+    for (size_t i = 0; i < _clients.size(); i++)
+    {
+        if (_clients[i] == client)
+            return true;
+    }
+    return false;
+}
+
 bool Channel::is_operator(Client *client)
 {
     for (size_t i = 0; i < _operators.size(); i++)

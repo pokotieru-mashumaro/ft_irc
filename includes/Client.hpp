@@ -33,7 +33,6 @@ public:
 	std::string getNickName() const {return _nickname;}
 	std::string getUserName() const {return _username;}
 	std::string getRealName() const {return _realname;}
-	// Channel *getChannel() const {return _nowchannel;}
 
 	void setStatus(int status){_status = status;}
 	void setIpAdd(std::string ipadd){_ipadd = ipadd;}
@@ -41,14 +40,13 @@ public:
 	void setNickName(std::string nickname){_nickname = nickname;}
 	void setUserName(std::string username){_username = username;}
 	void setRealName(std::string realname){_realname = realname;}
-	// void setChannel(Channel *channel){_nowchannel = channel;}
 
 	static void pass(Server *server, Client *client, std::string param);
 	static void nick(Server *server, Client *client, std::string param);
 	static void user(Server *server, Client *client, std::string param);
 	static void privmsg(Server *server, Client *client, std::string param);
 	
-	static void quit(Server *server, Client *client, std::string param);
+	// static void quit(Server *server, Client *client, std::string param);
 };
 
 #endif
