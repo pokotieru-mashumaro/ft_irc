@@ -15,6 +15,7 @@ Server::Server(int port, std::string password)
 	setCommand("NICK", &Client::nick);
 	setCommand("USER", &Client::user);
 	setCommand("PRIVMSG", &Client::privmsg);
+	setCommand("QUIT", &Client::quit);
 
 	// channel
 	setCommand("JOIN", &Channel::join);
@@ -42,6 +43,18 @@ Channel *Server::getChannel(std::string channelname)
 	}
 	return NULL;
 }
+
+std::vector<std::string> Server::getChannelNames()
+{
+	std::vector<std::string> ret;
+
+	for (size_t i = 0; i < _channels.size(); i++)
+	{
+		ret.push_back(_channels[i]->getName());
+	}
+	return ret;
+}
+
 
 void Server::setCommand(std::string command, function fun)
 {

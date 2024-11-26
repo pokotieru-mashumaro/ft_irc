@@ -24,6 +24,19 @@ paramsが2つかつ送り先がおかしい時 PRIVMSG test hello
 #define PRIV_ERROR3(nickname, target) std::string(":" + SERVER_NAME + " 401 " + nickname + " " + target + " :No such nick or channel name")
 #define PRIV_SUCCESS(nickname, username, channelname, message) std::string(":" + nickname + "!?" + username + "@localhost PRIVMSG " + channelname + " :" + message)
 
+static bool is_ok_target(Server *server, std::string target)
+{
+    std::vector<std::string> channel_names = server->getChannelNames();
+    for (size_t i = 0; i < channel_names.size(); i++)
+        if (channel_names[i] == target)
+            return true;
+    std::vector<std::string> client_names = server->getNickNames();
+    for (size_t i = 0; i < client_names.size(); i++)
+        if (client_names[i] == target)
+            return true;
+    return false;
+}
+
 void Client::privmsg(Server *server, Client *client, std::string param)
 {
     std::vector<std::string> params;
@@ -36,5 +49,11 @@ void Client::privmsg(Server *server, Client *client, std::string param)
     else if (params.size() == 1)
         return server->SendMsg2Client(client->getFd(), PRIV_ERROR2(client->getNickName()));
     else if (params.size() >= 3)
-        return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), ));
+        return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "PRIVMSG"));
+    if (!is_ok_target(server, params[0]))
+        return server->SendMsg2Client(client->getFd(), PRIV_ERROR3(client->getNickName(), params[0]));
+        
+    Channel *channel = server->getChannel(params[0]);
+    return server->SendMsg2Channnel(client, channel, PRIV_SUCCESS(client->getNickName(), client->getUserName(), params[0], params[1]));
+    
 }

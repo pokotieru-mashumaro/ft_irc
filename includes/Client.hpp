@@ -47,6 +47,8 @@ public:
 	static void nick(Server *server, Client *client, std::string param);
 	static void user(Server *server, Client *client, std::string param);
 	static void privmsg(Server *server, Client *client, std::string param);
+	
+	static void quit(Server *server, Client *client, std::string param);
 };
 
 #endif

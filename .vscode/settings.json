@@ -71,6 +71,7 @@
         "__hash_table": "cpp",
         "__tree": "cpp",
         "map": "cpp",
-        "__node_handle": "cpp"
+        "__node_handle": "cpp",
+        "chrono": "cpp"
     }
 }
