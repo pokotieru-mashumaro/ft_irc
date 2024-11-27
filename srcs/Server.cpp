@@ -20,6 +20,8 @@ Server::Server(int port, std::string password)
 	// channel
 	setCommand("JOIN", &Channel::join);
 	setCommand("PART", &Channel::part);
+	setCommand("INVITE", &Channel::invite);
+	setCommand("MODE", &Channel::mode);
 
 }
 
@@ -32,6 +34,16 @@ std::vector<std::string> Server::getNickNames()
 		ret.push_back(_clients[i]->getNickName());
 	}
 	return ret;
+}
+
+Client *Server::getClient(std::string nickname)
+{
+	for (size_t i = 0; i < _clients.size(); i++)
+	{
+		if (nickname == _clients[i]->getNickName())
+			return _clients[i];
+	}
+	return NULL;
 }
 
 Channel *Server::getChannel(std::string channelname)

@@ -30,6 +30,18 @@ void Channel::unsetOperaor(Client *cli)
     }
 }
 
+void Channel::unsetInviteList(std::string nick)
+{
+    for (std::vector<std::string>::iterator it = _invite_list.begin(); it != _invite_list.end(); ++it)
+     {
+        if (*it == nick) 
+        {
+            _invite_list.erase(it);
+            break;
+        }
+    }
+}
+
 bool Channel::is_exist(Client *client)
 {
     for (size_t i = 0; i < _clients.size(); i++)
@@ -40,11 +52,31 @@ bool Channel::is_exist(Client *client)
     return false;
 }
 
+bool Channel::is_exist_string(std::string nickname)
+{
+    for (size_t i = 0; i < _clients.size(); i++)
+    {
+        if (_clients[i]->getNickName() == nickname)
+            return true;
+    }
+    return false;
+}
+
 bool Channel::is_operator(Client *client)
 {
     for (size_t i = 0; i < _operators.size(); i++)
     {
         if (_operators[i] == client)
+            return true;
+    }
+    return false;
+}
+
+bool Channel::is_invited(std::string nick)
+{
+    for (size_t i = 0; i < _invite_list.size(); i++)
+    {
+        if (_invite_list[i] == nick)
             return true;
     }
     return false;

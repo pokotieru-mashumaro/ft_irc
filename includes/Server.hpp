@@ -41,6 +41,7 @@ public:
 	std::vector<std::string> getNickNames();
 	std::vector<std::string> getChannelNames();
 	Channel *getChannel(std::string channelname);
+	Client *getClient(std::string nickname);
 
 	void setCommand(std::string command, function fun);
 	void setChannels(Channel *channel) {_channels.push_back(channel);};

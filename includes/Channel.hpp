@@ -10,6 +10,7 @@ private:
     std::string _password;
 	std::vector<Client *>  _operators;
     std::vector<Client *> _clients;
+    std::vector<std::string>  _invite_list;
 
 public:
 	Channel(std::string name);
@@ -24,19 +25,23 @@ public:
     void setPassword(std::string pass) {_password = pass;};
     void setClient(Client *cli){_clients.push_back(cli);};
     void setOperator(Client *cli){_operators.push_back(cli);};
+    void setInviteList(std::string nick) {_invite_list.push_back(nick);};
 
     void unsetClient(Client *cli);
     void unsetOperaor(Client *cli);
+    void unsetInviteList(std::string nick);
 
     bool is_exist(Client *client);
+    bool is_exist_string(std::string nickname);
     bool is_operator(Client *client);
+    bool is_invited(std::string nick);
 
     static void join(Server *server, Client *client, std::string param);
     static void part(Server *server, Client *client, std::string param);
     static void mode(Server *server, Client *client, std::string param);
+    static void invite(Server *server, Client *client, std::string param);
 
     void kick();
-    void invite();
     void topic();
 };
 

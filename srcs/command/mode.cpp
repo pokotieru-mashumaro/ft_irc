@@ -21,18 +21,14 @@ Parameters: <channel> *( ( "-" / "+" ) *<modes> *<modeparams> )
 MODE成功 同チャンネルのユーザーにも送られる
 :nickname!~username@localhost MODE #123 -i
 
+
+//先頭+,-のみ。mode_charはひとつのみ。
 */
 
 #define MODE_ERROR1(nickname, channelname) std::string(":" + SERVER_NAME + " 401 " + nickname + " " + channelname + " :No such nick or channel name")
 #define MODE_ERROR2(nickname, channelname) std::string(":" + SERVER_NAME + " 442 " + nickname + " " + channelname + " :You are not on that channel")
 #define MODE_ERROR3(nickname, channelname) std::string(":" + SERVER_NAME + " 482 " + nickname + " " + channelname + " :You are not channel operator")
 #define MODE_SUCCESS(nickname, username, param) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param)
-
-//先頭+,-のみ。mode_charはひとつのみ。
-std::string mode_char(std::string)
-{
-
-}
 
 void Channel::mode(Server *server, Client *client, std::string param)
 {
@@ -50,6 +46,5 @@ void Channel::mode(Server *server, Client *client, std::string param)
         return server->SendMsg2Client(client->getFd(), MODE_ERROR2(client->getNickName(), params[0]));
     if (!channel->is_operator(client))
         return server->SendMsg2Client(client->getFd(), MODE_ERROR3(client->getNickName(), params[0]));
-    
     
 }
