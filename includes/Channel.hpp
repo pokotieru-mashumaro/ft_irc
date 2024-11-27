@@ -39,9 +39,9 @@ public:
     static void join(Server *server, Client *client, std::string param);
     static void part(Server *server, Client *client, std::string param);
     static void mode(Server *server, Client *client, std::string param);
+    static void kick(Server *server, Client *client, std::string param);
     static void invite(Server *server, Client *client, std::string param);
 
-    void kick();
     void topic();
 };
 

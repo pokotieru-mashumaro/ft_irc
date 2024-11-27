@@ -20,6 +20,7 @@ Server::Server(int port, std::string password)
 	// channel
 	setCommand("JOIN", &Channel::join);
 	setCommand("PART", &Channel::part);
+	setCommand("KICK", &Channel::kick);
 	setCommand("INVITE", &Channel::invite);
 	setCommand("MODE", &Channel::mode);
 
