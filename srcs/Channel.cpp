@@ -4,6 +4,7 @@ Channel::Channel(std::string name)
 {
     _name = name;
     _password = "";
+    _topic = "";
 };
 
 void Channel::unsetClient(Client *cli)

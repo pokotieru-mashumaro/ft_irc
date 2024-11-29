@@ -8,6 +8,7 @@ class Channel
 private:
     std::string _name;
     std::string _password;
+    std::string _topic;
 	std::vector<Client *>  _operators;
     std::vector<Client *> _clients;
     std::vector<std::string>  _invite_list;
@@ -18,11 +19,13 @@ public:
     // Client getOperator(){return _operator;};
     std::string getName() const {return _name;};
     std::string getPassword() const {return _password;};
+    std::string getTopic() const {return _topic;};
     std::vector<Client *> getOperators() const {return _operators;};
     std::vector<Client *> getClients() const {return _clients;};
 
     void setName(std::string name) {_name = name;};
     void setPassword(std::string pass) {_password = pass;};
+    void setTopic(std::string topic) {_topic = topic;};
     void setClient(Client *cli){_clients.push_back(cli);};
     void setOperator(Client *cli){_operators.push_back(cli);};
     void setInviteList(std::string nick) {_invite_list.push_back(nick);};
@@ -41,8 +44,7 @@ public:
     static void mode(Server *server, Client *client, std::string param);
     static void kick(Server *server, Client *client, std::string param);
     static void invite(Server *server, Client *client, std::string param);
-
-    void topic();
+    static void topic(Server *server, Client *client, std::string param);
 };
 
 #endif
