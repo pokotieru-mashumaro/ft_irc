@@ -1,12 +1,6 @@
 #ifndef Client_HPP
 #define Client_HPP
 
-#define NEED_PASSWORD 1
-#define NEED_NAMES 2
-#define IN_HOME 3
-#define IN_CHANNEL 4
-#define SET_CHANNELNAME 5
-
 class Channel;
 class Server;
 
@@ -14,7 +8,6 @@ class Client
 {
 private:
 	int _fd;
-	int _status;
 	std::string _ipadd;
 	bool _is_passed;
 	std::string _nickname;
@@ -29,12 +22,10 @@ public:
 	bool isConnected();
 
 	int getFd() const {return _fd;}
-	int getStatus() const {return _status;}
 	std::string getNickName() const {return _nickname;}
 	std::string getUserName() const {return _username;}
 	std::string getRealName() const {return _realname;}
 
-	void setStatus(int status){_status = status;}
 	void setIpAdd(std::string ipadd){_ipadd = ipadd;}
 	void setIsPassed(bool is_passed){_is_passed = is_passed;}
 	void setNickName(std::string nickname){_nickname = nickname;}

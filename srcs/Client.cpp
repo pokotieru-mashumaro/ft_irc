@@ -2,7 +2,6 @@
 
 Client::Client(int fd)
 {
-    _status = NEED_PASSWORD;
     _is_passed = false;
     _nickname = "*";
     _username = "";

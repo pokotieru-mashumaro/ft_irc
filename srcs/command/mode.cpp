@@ -3,6 +3,8 @@
 /*
 Parameters: <channel> *( ( "-" / "+" ) *<modes> *<modeparams> )
 
+実装：i, t, k, o, l
+
 引数なし or 存在しないコマンドな場合
 :naishomarunosukenomacbook-air.local 461 nickname MODE :Syntax error
 
