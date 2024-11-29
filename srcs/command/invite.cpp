@@ -50,7 +50,7 @@ void Channel::invite(Server *server, Client *client, std::string param)
         return server->SendMsg2Client(client->getFd(), INVITE_ERROR2(client->getNickName(), target->getNickName()));
     if (channel->is_exist(client))
         return server->SendMsg2Client(client->getFd(), INVITE_ERROR3(client->getNickName(), channel->getName()));
-    if (!channel->is_operator(target))
+    if (!channel->is_operator(client))
         return server->SendMsg2Client(client->getFd(), NOT_OPERATOR(client->getNickName(), channel->getName()));
     
     channel->setInviteList(target->getNickName());
