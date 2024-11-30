@@ -1,6 +1,5 @@
 #include "../../includes/All.hpp"
 
-//頭と尻のスペース削除
 std::string trim(std::string str) 
 {
     int length;
@@ -48,16 +47,3 @@ size_t s2st_for_mode_l(std::string str)
 
     return result;
 }
-
-// int main() 
-// {
-//     std::string param = "1 2 3 4 5 10";
-//     std::vector<std::string> params = split_string(param, ' ');
-
-//     for (size_t i = 0; i < params.size(); i++)
-//     {
-//         std::cout << params[i] << ":" << std::endl;
-//     }
-
-//     return 0;
-// }

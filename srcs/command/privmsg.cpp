@@ -1,24 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-params: <msgtarget> <text to be sent>
-
-paramsがなかった時
-:naishomarunosukenomacbook-air.local 411 nickname :No recipient given (PRIVMSG)
-
-paramsが一つの時
-:naishomarunosukenomacbook-air.local 412 nickname :No text to send
-
-paramsが3つ以上の時
-:naishomarunosukenomacbook-air.local 461 nickname PRIVMSG :Syntax error
-
-paramsが2つかつ送り先がおかしい時 PRIVMSG test hello
-:naishomarunosukenomacbook-air.local 401 nickname test :No such nick or channel name
-
-成功したら自分以外に返す。
-:nickname!~username@localhost PRIVMSG #123 :message
-*/
-
 #define PRIV_SUCCESS(nickname, username, channelname, message) std::string(":" + nickname + "!?" + username + "@localhost PRIVMSG " + channelname + " :" + message)
 
 static bool is_ok_target(Server *server, std::string target)

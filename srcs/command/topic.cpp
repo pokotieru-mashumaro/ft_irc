@@ -1,24 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-Parameters: <channel> [ <topic> ]
-
-引数1,2以外
-
-topicない状態で引数1個（自分だけ）  TOPIC #123
-:naishomarunosukenomacbook-air.local 331 kk #123 :No topic is set
-
-存在しないchannel
-:naishomarunosukenomacbook-air.local 403 KK asdf :No such channel
-
-成功（全員同じ）TOPIC #123 @@
-:KK!~kkoma@localhost TOPIC #123 :@@
-
-成功,引数1個(自分だけ) TOPIC #123
-:naishomarunosukenomacbook-air.local 332 KK #123 :@@
-:naishomarunosukenomacbook-air.local 333 KK #123 KK 1732858505
-*/
-
 #define TOPIC_SUCCESS1(nickname, username, channelname, topic) std::string(":" + nickname + "!~" + username + "@localhost TOPIC :" + channelname +  " :" + topic)
 #define TOPIC_SUCCESS2(nickname, channelname, topic) std::string(":" + SERVER_NAME + " 332 " + nickname + " " + channelname + " :" + topic)
 

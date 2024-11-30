@@ -1,24 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-Parameters: <channel> <user> [<comment>]
-
-引数が2,3以外
-:naishomarunosukenomacbook-air.local 461 kk KICK :Syntax error
-
-存在しないチャンネル KICK para1 para2
-:naishomarunosukenomacbook-air.local 401 kk para2 :No such nick or channel name
-
-いない人をkick
-:naishomarunosukenomacbook-air.local 441 kk me #123 :They aren't on that channel
-
-成功 チャンネル内のすべてのユーザーに同じメッセージ
-:nickname!~username@localhost KICK #123 mei :nickname
-messageがあれば
-:nickname!~username@localhost KICK #123 mei :message
-
-*/
-
 #define KICK_SUCCESS(nickname, username, channelname, targetnick, msg) std::string(":" + nickname + "!~" + username + "@localhost KICK :" + channelname + " " + targetnick +  " :" + msg)
 
 void Channel::kick(Server *server, Client *client, std::string param)

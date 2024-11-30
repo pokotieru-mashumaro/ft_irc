@@ -1,16 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-パラメーターがなしor多い：
-:naishomarunosukenomacbook-air.local 461 * NICK :Syntax error
-
-使えない文字；432 * (param)
-:naishomarunosukenomacbook-air.local 432 * j@j :Erroneous nickname
-
-名前被り：
-:naishomarunosukenomacbook-air.local 433 * kko :Nickname already in use
-*/
-
 static bool contains_ng_ascii(const std::string& str) {
     for (int i = 0; i < (int)str.size(); ++i)
     {

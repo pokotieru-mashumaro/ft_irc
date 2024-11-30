@@ -1,33 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-paramの先頭に#がないとき "JOIN hello" "JOIN hello oo"
-:naishomarunosukenomacbook-air.local 403 kkomatsu hello :No such channel
-
-invite生の時
-:naishomarunosukenomacbook-air.local 473 ss #123 :Cannot join channel (+i) -- Invited users only
-
-mode k ~ でパスワードがあった時
-:naishomarunosukenomacbook-air.local 475 mei #1 :Cannot join channel (+k) -- Wrong channel key
-
-:naishomarunosukenomacbook-air.local 471 mei #123 :Cannot join channel (+l) -- Channel is full, try later
-
-
-成功例(nickname = kkomatsu)：JOIN #sample
-:kkomatsu!~kk@localhost JOIN :#sample
-:naishomarunosukenomacbook-air.local 353 kkomatsu = #sample :@kkomatsu
-:naishomarunosukenomacbook-air.local 366 kkomatsu #sample :End of NAMES list
-
-:naishomarunosukenomacbook-air.local 353 wedrf = #sample :wedrf @kkomatsu
-
-JOIN #123
-JOIN #123
-複数回入ってもエラーは返さない。何も返さない。
-
-他の人が参加したら同チャンネルにいるクライアントにメッセージを送信
-:saki!~myusername@localhost JOIN :#sample
-*/
-
 #define JOIN_SUCCESS1(nickname, username, channelname) std::string(":" + nickname + "!~" + username + "@localhost JOIN :" + channelname)
 #define JOIN_SUCCESS2(nickname, channelname, nicknames) std::string(":" + SERVER_NAME + " 353 " + nickname + " = " + channelname + " :" + nicknames)
 #define JOIN_SUCCESS3(nickname, channelname) std::string(":" + SERVER_NAME + " 366 " + nickname + + " " + channelname + " :End of NAMES list")

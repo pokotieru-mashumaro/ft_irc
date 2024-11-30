@@ -1,29 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-Parameters: <nickname> <channel>
-
-
-引数が2つ以外の時
-:naishomarunosukenomacbook-air.local 461 asd INVITE :Syntax error
-
-:naishomarunosukenomacbook-air.local 401 kk saki :No such nick or channel name
-
-すでにいる
-:naishomarunosukenomacbook-air.local 443 mynick targetnick #123 :is already on channel
-
-自分がそのチャンネルにいない
-:naishomarunosukenomacbook-air.local 442 kk #123 :You are not on that channel
-
-自分がそのチャンネルのオペレーターではない
-:naishomarunosukenomacbook-air.local 482 nickname channelname :You're not channel operator
-
-成功時 自分が受け取る
-:naishomarunosukenomacbook-air.local 341 mynick targetnick #123
-成功時 あいてが受け取る
-:nickname!~username@localhost INVITE 相手のnick #123
-*/
-
 #define INVITE_SUCCESS(nickname, targetname, channelname) std::string(":" + SERVER_NAME + " 341 " + nickname + " " + targetname + " " + channelname)
 #define INVITE_OTHER_CLIENT(nickname, username, targetnick, channelname) std::string(":" + nickname + "!~" + username + "@localhost INVITE :" + targetnick + " " + channelname)
 

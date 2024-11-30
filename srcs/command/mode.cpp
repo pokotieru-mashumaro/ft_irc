@@ -1,45 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-Parameters: <channel> *( ( "-" / "+" ) *<modes> *<modeparams> )
-
-実装：i, t, k, o, l
-
-i,tは追加ぱらむはいらない
-k,o,lは追加ぱらむ必要
-:naishomarunosukenomacbook-air.local 461 hello MODE :Syntax error
-
-MODE #123 l dsdd 最後は数字
-:naishomarunosukenomacbook-air.local 696 saki #123 l * :Invalid mode parameter
-
-MODE #123 o saki
-:naishomarunosukenomacbook-air.local 441 mei saki #123 :They aren't on that channel
-
-
-
-
-
-引数なし or 存在しないコマンドな場合
-:naishomarunosukenomacbook-air.local 461 nickname MODE :Syntax error
-
-チャンネルが存在しない
-:naishomarunosukenomacbook-air.local 401 nickname #123 :No such nick or channel name
-
-チャンネルに入っていない
-:naishomarunosukenomacbook-air.local 442 nickname #123 :You are not on that channel
-
-チャンネルのオペレーターではない
-:naishomarunosukenomacbook-air.local 482 nickname #123 :You are not channel operator
-
-+,-がないときは+になる。MODE #123 i
-:nickname!~username@localhost MODE #123 +i
-
-MODE成功 同チャンネルのユーザーにも送られる
-:nickname!~username@localhost MODE #123 -i
-
-
-//先頭+,-のみ。mode_charはひとつのみ。
-*/
 #define MODE_SUCCESS(nickname, username, param) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param)
 #define MODE_SUCCESS2(nickname, username, param1, param2) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param1 + " " + param2)
 
@@ -157,8 +117,6 @@ static void mode_cmd_l(Server *server, Client *client, Channel *channel, std::ve
         return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), "-l"));
     }
 }
-
-
 
 void Channel::mode(Server *server, Client *client, std::string param)
 {

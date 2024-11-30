@@ -1,23 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-パラメータが1,2個以外
-
-チャンネル名がない  PART saple
-:naishomarunosukenomacbook-air.local 403 nickname saple :No such channel
-
-チャンネルにいない
-:naishomarunosukenomacbook-air.local 442 jvnd #sample :You are not on that channel
-
-成功
-PART #sample
-:kkk!~asd@localhost PART #sample :
-
-PART #sample message
-:kkk!~asd@localhost PART #sample :message
-
-*/
-
 #define PART_SUCCESS(nickname, username, channelname, message) std::string(":" + nickname + "!~" + username + "@localhost PART " + channelname + " :" + message)
 
 static bool is_not_join(Channel *channel, std::string nickname)

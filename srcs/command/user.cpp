@@ -1,15 +1,5 @@
 #include "../../includes/All.hpp"
 
-/*
-Parameters: <user> <mode> <unused> <realname>
-<mode> <unused>を実装するのか
-
-
-パラメーターがなしor多い：
-:naishomarunosukenomacbook-air.local 461 * NICK :Syntax error
-
-*/
-
 void Client::user(Server *server, Client *client, std::string param)
 {
     std::vector<std::string> params;
