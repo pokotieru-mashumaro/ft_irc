@@ -16,11 +16,17 @@
 #define NOT_CONNECT(nickname) std::string(":" + SERVER_NAME + " 451 " + nickname + " :Connection not registered")
 #define NOT_OPERATOR(nickname, channelname) std::string(":" + SERVER_NAME + " 482 " + nickname + " " + channelname + " You're not channel operator")
 
+#define ERROR_331(nickname, channelname) std::string(":" + SERVER_NAME + " 331 " + nickname + " " + channelname + " :No topic is set")
 
 #define ERROR_401(nickname, para) std::string(":" + SERVER_NAME + " 401 " + nickname + " " + para + " :No such nick or channel name")
 #define ERROR_403(nickname, channelname) std::string(":" + SERVER_NAME + " 403 " + nickname + " " + channelname + " :No such channeel")
+#define ERROR_411(nickname) std::string(":" + SERVER_NAME + " 411 " + nickname + " :No recipient given (PRIVMSG)")
+#define ERROR_412(nickname) std::string(":" + SERVER_NAME + " 412 " + nickname + " :No text to send")
+#define ERROR_432(nickname) std::string(":" + SERVER_NAME + " 432 * " + nickname + " :Erroneous nickname")
+#define ERROR_433(nickname) std::string(":" + SERVER_NAME + " 433 * " + nickname + " :Nickname already in use")
 #define ERROR_441(nickname, targetnick, channelname) std::string(":" + SERVER_NAME + " 441 " + nickname + " " + targetnick + " " + channelname + " :They aren't on that channel")
 #define ERROR_442(nickname, channelname) std::string(":" + SERVER_NAME + " 442 " + nickname + " " + channelname + " :You are not on that channel")
+#define ERROR_443(nickname, targetnick) std::string(":" + SERVER_NAME + " 443 " + nickname + " " + targetnick + " :is already on channel")
 #define ERROR_482(nickname, channelname) std::string(":" + SERVER_NAME + " 482 " + nickname + " " + channelname + " :You are not channel operator")
 #define ERROR_696(nickname, channnelname, param) std::string(":" + SERVER_NAME + " 696" + nickname + " " + channnelname + " " + param + " * :Invalid mode parameter")
 

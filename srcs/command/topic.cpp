@@ -19,8 +19,6 @@ topicない状態で引数1個（自分だけ）  TOPIC #123
 :naishomarunosukenomacbook-air.local 333 KK #123 KK 1732858505
 */
 
-#define TOPIC_ERROR1(nickname, channelname) std::string(":" + SERVER_NAME + " 331 " + nickname + " " + channelname + " :No topic is set")
-#define TOPIC_ERROR2(nickname, channelname) std::string(":" + SERVER_NAME + " 403 " + nickname + " " + channelname + " :No such channeel")
 #define TOPIC_SUCCESS1(nickname, username, channelname, topic) std::string(":" + nickname + "!~" + username + "@localhost TOPIC :" + channelname +  " :" + topic)
 #define TOPIC_SUCCESS2(nickname, channelname, topic) std::string(":" + SERVER_NAME + " 332 " + nickname + " " + channelname + " :" + topic)
 
@@ -35,11 +33,11 @@ void Channel::topic(Server *server, Client *client, std::string param)
     
     Channel *channel = server->getChannel(params[0]);
     if (!channel)
-        return server->SendMsg2Client(client->getFd(), TOPIC_ERROR2(client->getNickName(), params[0]));
+        return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), params[0]));
     if (!channel->is_operator(client))
         return server->SendMsg2Client(client->getFd(), NOT_OPERATOR(client->getNickName(), channel->getName()));
     if (params.size() == 1 && channel->getTopic() == "")
-        return server->SendMsg2Client(client->getFd(), TOPIC_ERROR1(client->getNickName(), channel->getName()));
+        return server->SendMsg2Client(client->getFd(), ERROR_331(client->getNickName(), channel->getName()));
 
     if (params.size() == 1)
     {

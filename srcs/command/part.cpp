@@ -18,8 +18,6 @@ PART #sample message
 
 */
 
-#define PART_ERROR1(nickname, channelname) std::string(":" + SERVER_NAME + " 403 " + nickname + " " + channelname + " :No such channeel")
-#define PART_ERROR2(nickname, channelname) std::string(":" + SERVER_NAME + " 442 " + nickname + " " + channelname + " :You are not on that channel")
 #define PART_SUCCESS(nickname, username, channelname, message) std::string(":" + nickname + "!~" + username + "@localhost PART " + channelname + " :" + message)
 
 static bool is_not_join(Channel *channel, std::string nickname)
@@ -46,9 +44,9 @@ void Channel::part(Server *server, Client *client, std::string param)
 
     Channel *channel = server->getChannel(params[0]);
     if (!channel)
-        return server->SendMsg2Client(client->getFd(), PART_ERROR1(client->getNickName(), params[0]));
+        return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), params[0]));
     if (is_not_join(channel, client->getNickName()))
-        return server->SendMsg2Client(client->getFd(), PART_ERROR2(client->getNickName(), params[0]));
+        return server->SendMsg2Client(client->getFd(), ERROR_442(client->getNickName(), params[0]));
     
     channel->unsetClient(client);
     channel->unsetOperaor(client);

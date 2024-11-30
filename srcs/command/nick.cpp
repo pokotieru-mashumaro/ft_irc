@@ -11,9 +11,6 @@
 :naishomarunosukenomacbook-air.local 433 * kko :Nickname already in use
 */
 
-#define NICK_ERROR1(nickname) std::string(":" + SERVER_NAME + " 432 * " + nickname + " :Erroneous nickname")
-#define NICK_ERROR2(nickname) std::string(":" + SERVER_NAME + " 433 * " + nickname + " :Nickname already in use")
-
 static bool contains_ng_ascii(const std::string& str) {
     for (int i = 0; i < (int)str.size(); ++i)
     {
@@ -45,9 +42,9 @@ void Client::nick(Server *server, Client *client, std::string param)
     if (param == "" || spaceIndex != std::string::npos)
         server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "NICK"));
     else if (contains_ng_ascii(param))
-        server->SendMsg2Client(client->getFd(), NICK_ERROR1(param));
+        server->SendMsg2Client(client->getFd(), ERROR_432(param));
     else if (is_duplicate_nickname(server, param))
-        server->SendMsg2Client(client->getFd(), NICK_ERROR2(param));
+        server->SendMsg2Client(client->getFd(), ERROR_433(param));
     else
         client->setNickName(param);
 }
