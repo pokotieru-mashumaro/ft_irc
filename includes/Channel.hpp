@@ -22,7 +22,7 @@ public:
     std::string getName() const {return _name;};
     std::string getPassword() const {return _password;};
     std::string getTopic() const {return _topic;};
-    size_t setMaxNum() const {return _max_num;};
+    size_t getMaxNum() const {return _max_num;};
     std::vector<Client *> getOperators() const {return _operators;};
     std::vector<Client *> getClients() const {return _clients;};
 

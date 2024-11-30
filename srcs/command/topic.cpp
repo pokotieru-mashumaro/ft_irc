@@ -35,7 +35,7 @@ void Channel::topic(Server *server, Client *client, std::string param)
     if (!channel)
         return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), params[0]));
     if (!channel->is_operator(client))
-        return server->SendMsg2Client(client->getFd(), NOT_OPERATOR(client->getNickName(), channel->getName()));
+        return server->SendMsg2Client(client->getFd(), ERROR_482(client->getNickName(), channel->getName()));
     if (params.size() == 1 && channel->getTopic() == "")
         return server->SendMsg2Client(client->getFd(), ERROR_331(client->getNickName(), channel->getName()));
 

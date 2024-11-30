@@ -35,7 +35,7 @@ void Channel::kick(Server *server, Client *client, std::string param)
     if (!channel)
         return server->SendMsg2Client(client->getFd(), ERROR_401(client->getNickName(), params[0]));
     if (!channel->is_operator(client))
-        return server->SendMsg2Client(client->getFd(), NOT_OPERATOR(client->getNickName(), channel->getName()));
+        return server->SendMsg2Client(client->getFd(), ERROR_482(client->getNickName(), channel->getName()));
     if (!target)
         return server->SendMsg2Client(client->getFd(), ERROR_401(client->getNickName(), params[1]));
     if (!channel->is_exist(target))

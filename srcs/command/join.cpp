@@ -83,10 +83,15 @@ void Channel::join(Server *server, Client *client, std::string param)
 
         channel->setOperator(client);
     }
-    // if (params.size() == 2)
-    //     channel->setPassword(params[1]);
+
     if (is_already_exist_client(channel, client->getNickName()))
         return;
+    if (channel->is_mode_adaptation("l") && channel->getClients().size() >= channel->getMaxNum())
+        return server->SendMsg2Client(client->getFd(), ERROR_471(client->getNickName(), client->getUserName()));
+    if (channel->is_mode_adaptation("i") && !channel->is_invited(client->getNickName()))
+        return server->SendMsg2Client(client->getFd(), ERROR_473(client->getNickName(), client->getUserName()));
+    if (channel->is_mode_adaptation("k") && (params.size() != 2 || channel->getPassword() != params[1]))
+        return server->SendMsg2Client(client->getFd(), ERROR_473(client->getNickName(), client->getUserName()));
 
     channel->setClient(client);
     channel->setName(params[0]);
