@@ -43,7 +43,7 @@ MODE成功 同チャンネルのユーザーにも送られる
 #define MODE_SUCCESS(nickname, username, param) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param)
 #define MODE_SUCCESS2(nickname, username, param1, param2) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param1 + " " + param2)
 
-static void mode_i(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
+static void mode_cmd_i(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
     if (params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
@@ -62,7 +62,7 @@ static void mode_i(Server *server, Client *client, Channel *channel, std::vector
     }
 }
 
-static void mode_t(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
+static void mode_cmd_t(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
     if (params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
@@ -81,7 +81,7 @@ static void mode_t(Server *server, Client *client, Channel *channel, std::vector
     }
 }
 
-static void mode_k(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
+static void mode_cmd_k(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
     if ((params[1] == "k" || params[1] == "+k") && !channel->is_mode_adaptation("k"))
     {
@@ -101,7 +101,7 @@ static void mode_k(Server *server, Client *client, Channel *channel, std::vector
     }
 }
 
-static void mode_o(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
+static void mode_cmd_o(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
     if (params.size() != 3)
         return;
@@ -130,7 +130,7 @@ static void mode_o(Server *server, Client *client, Channel *channel, std::vector
     }
 }
 
-static void mode_l(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
+static void mode_cmd_l(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
 
     if ((params[1] == "l" || params[1] == "+l") && !channel->is_mode_adaptation("l"))
@@ -177,9 +177,9 @@ void Channel::mode(Server *server, Client *client, std::string param)
     if (!channel->is_operator(client))
         return server->SendMsg2Client(client->getFd(), ERROR_482(client->getNickName(), params[0]));
 
-    mode_i(server, client, channel, params);
-    mode_t(server, client, channel, params);
-    mode_k(server, client, channel, params);
-    mode_o(server, client, channel, params);
-    mode_l(server, client, channel, params);
+    mode_cmd_i(server, client, channel, params);
+    mode_cmd_t(server, client, channel, params);
+    mode_cmd_k(server, client, channel, params);
+    mode_cmd_o(server, client, channel, params);
+    mode_cmd_l(server, client, channel, params);
 }
