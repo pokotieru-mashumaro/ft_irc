@@ -6,7 +6,6 @@ Client::Client(int fd)
     _nickname = "*";
     _username = "";
     _fd = fd;
-    // _nowchannel = NULL;
 };
 
 bool Client::isConnected()
