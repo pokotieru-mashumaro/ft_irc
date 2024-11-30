@@ -5,6 +5,7 @@ Channel::Channel(std::string name)
     _name = name;
     _password = "";
     _topic = "";
+    _max_num = 0;
 };
 
 void Channel::unsetClient(Client *cli)
@@ -38,6 +39,18 @@ void Channel::unsetInviteList(std::string nick)
         if (*it == nick) 
         {
             _invite_list.erase(it);
+            break;
+        }
+    }
+}
+
+void Channel::unsetMode(std::string mode)
+{
+    for (std::vector<std::string>::iterator it = _some_mode.begin(); it != _some_mode.end(); ++it)
+     {
+        if (*it == mode) 
+        {
+            _some_mode.erase(it);
             break;
         }
     }
@@ -78,6 +91,16 @@ bool Channel::is_invited(std::string nick)
     for (size_t i = 0; i < _invite_list.size(); i++)
     {
         if (_invite_list[i] == nick)
+            return true;
+    }
+    return false;
+}
+
+bool Channel::is_mode_adaptation(std::string mode)
+{
+    for (size_t i = 0; i < _some_mode.size(); i++)
+    {
+        if (_some_mode[i] == mode)
             return true;
     }
     return false;

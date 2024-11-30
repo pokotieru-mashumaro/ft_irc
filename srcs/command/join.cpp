@@ -4,6 +4,15 @@
 paramの先頭に#がないとき "JOIN hello" "JOIN hello oo"
 :naishomarunosukenomacbook-air.local 403 kkomatsu hello :No such channel
 
+invite生の時
+:naishomarunosukenomacbook-air.local 473 ss #123 :Cannot join channel (+i) -- Invited users only
+
+mode k ~ でパスワードがあった時
+:naishomarunosukenomacbook-air.local 475 mei #1 :Cannot join channel (+k) -- Wrong channel key
+
+:naishomarunosukenomacbook-air.local 471 mei #123 :Cannot join channel (+l) -- Channel is full, try later
+
+
 成功例(nickname = kkomatsu)：JOIN #sample
 :kkomatsu!~kk@localhost JOIN :#sample
 :naishomarunosukenomacbook-air.local 353 kkomatsu = #sample :@kkomatsu
@@ -19,7 +28,6 @@ JOIN #123
 :saki!~myusername@localhost JOIN :#sample
 */
 
-#define JOIN_ERROR1(nickname, channelname) std::string(":" + SERVER_NAME + " 403 " + nickname + " " + channelname + " :No such channeel")
 #define JOIN_SUCCESS1(nickname, username, channelname) std::string(":" + nickname + "!~" + username + "@localhost JOIN :" + channelname)
 #define JOIN_SUCCESS2(nickname, channelname, nicknames) std::string(":" + SERVER_NAME + " 353 " + nickname + " = " + channelname + " :" + nicknames)
 #define JOIN_SUCCESS3(nickname, channelname) std::string(":" + SERVER_NAME + " 366 " + nickname + + " " + channelname + " :End of NAMES list")
@@ -65,7 +73,7 @@ void Channel::join(Server *server, Client *client, std::string param)
     if (params.size() != 1 && params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "JOIN"));
     if (params[0][0] != '#')
-        return server->SendMsg2Client(client->getFd(), JOIN_ERROR1(client->getNickName(), param));
+        return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), param));
 
     Channel *channel = server->getChannel(params[0]);
     if (channel == NULL)
@@ -75,8 +83,8 @@ void Channel::join(Server *server, Client *client, std::string param)
 
         channel->setOperator(client);
     }
-    if (params.size() == 2)
-        channel->setPassword(params[1]);
+    // if (params.size() == 2)
+    //     channel->setPassword(params[1]);
     if (is_already_exist_client(channel, client->getNickName()))
         return;
 

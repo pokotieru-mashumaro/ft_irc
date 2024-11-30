@@ -30,6 +30,25 @@ std::vector<std::string> split_string(std::string str, char c)
 	return elems;
 }
 
+size_t s2st_for_mode_l(std::string str) 
+{
+    if (str.empty())
+        return static_cast<size_t>(-1);
+
+    for (size_t i = 0; i < str.size(); ++i) 
+	{
+        if (!isdigit(str[i]))
+            return static_cast<size_t>(-1);
+    }
+
+    std::stringstream ss(str);
+    size_t result;
+    if (!(ss >> result))
+        return static_cast<size_t>(-1);
+
+    return result;
+}
+
 // int main() 
 // {
 //     std::string param = "1 2 3 4 5 10";
