@@ -1,7 +1,7 @@
 #include "../../includes/All.hpp"
 
-#define MODE_SUCCESS(nickname, username, param) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param)
-#define MODE_SUCCESS2(nickname, username, param1, param2) std::string(":" + nickname + "!?" + username + "@localhost MODE " + param1 + " " + param2)
+#define MODE_SUCCESS(nickname, username, param) std::string(":" + nickname + "!~" + username + "@localhost MODE " + param)
+#define MODE_SUCCESS2(nickname, username, param1, param2) std::string(":" + nickname + "!~" + username + "@localhost MODE " + param1 + " " + param2)
 
 static void mode_cmd_i(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {

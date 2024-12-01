@@ -1,6 +1,6 @@
 #include "../../includes/All.hpp"
 
-#define PRIV_SUCCESS(nickname, username, channelname, message) std::string(":" + nickname + "!?" + username + "@localhost PRIVMSG " + channelname + " :" + message)
+#define PRIV_SUCCESS(nickname, username, channelname, message) std::string(":" + nickname + "!~" + username + "@localhost PRIVMSG " + channelname + " :" + message)
 
 static bool is_ok_target(Server *server, std::string target)
 {
@@ -31,7 +31,14 @@ void Client::privmsg(Server *server, Client *client, std::string param)
     if (!is_ok_target(server, params[0]))
         return server->SendMsg2Client(client->getFd(), ERROR_401(client->getNickName(), params[0]));
         
-    Channel *channel = server->getChannel(params[0]);
-    return server->SendMsg2Channnel(client, channel, PRIV_SUCCESS(client->getNickName(), client->getUserName(), params[0], params[1]));
-    
+    if (params[0][0] == '#')
+    {
+        Channel *channel = server->getChannel(params[0]);
+        return server->SendMsg2Channnel(client, channel, PRIV_SUCCESS(client->getNickName(), client->getUserName(), params[0], params[1]));
+    }
+    else
+    {
+        Client *target = server->getClient(params[0]);
+        return server->SendMsg2Client(target->getFd(), PRIV_SUCCESS(client->getNickName(), client->getUserName(), params[0], params[1]));
+    }
 }

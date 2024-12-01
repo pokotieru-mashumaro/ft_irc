@@ -29,7 +29,20 @@
 #define ERROR_471(nickname, channelname) std::string(":" + SERVER_NAME + " 473 " + nickname + " " + channelname + " :Cannot join channel (+l) -- Channel is full, try later")
 #define ERROR_473(nickname, channelname) std::string(":" + SERVER_NAME + " 473 " + nickname + " " + channelname + " :Cannot join channel (+i) -- Invited users only")
 #define ERROR_475(nickname, channelname) std::string(":" + SERVER_NAME + " 475 " + nickname + " " + channelname + " :Cannot join channel (+k) -- Wrong channel key")
+
+
 #define ERROR_482(nickname, channelname) std::string(":" + SERVER_NAME + " 482 " + nickname + " " + channelname + " :You are not channel operator")
+//Your privileges are too low
+
 #define ERROR_696(nickname, channnelname, param) std::string(":" + SERVER_NAME + " 696" + nickname + " " + channnelname + " " + param + " * :Invalid mode parameter")
 
 #endif
+
+
+/*
+ダメだったとこ
+
+
+
+
+*/
