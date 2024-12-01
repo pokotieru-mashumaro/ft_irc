@@ -43,6 +43,7 @@
 ダメだったとこ
 
 
-
+MODE #123 -k
+:my_server 461 kota MODE :Syntax error
 
 */

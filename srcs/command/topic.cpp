@@ -15,6 +15,8 @@ void Channel::topic(Server *server, Client *client, std::string param)
     Channel *channel = server->getChannel(params[0]);
     if (!channel)
         return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), params[0]));
+    if (!channel->is_exist(client))
+        return server->SendMsg2Client(client->getFd(), ERROR_442(client->getNickName(), channel->getName()));
     if (channel->is_mode_adaptation("t") && !channel->is_operator(client))
         return server->SendMsg2Client(client->getFd(), ERROR_482(client->getNickName(), channel->getName()));
     if (params.size() == 1 && channel->getTopic() == "")

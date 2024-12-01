@@ -39,6 +39,8 @@ void Client::privmsg(Server *server, Client *client, std::string param)
     else
     {
         Client *target = server->getClient(params[0]);
+        if (!target->isConnected())
+            return server->SendMsg2Client(client->getFd(), ERROR_401(client->getNickName(), params[0]));
         return server->SendMsg2Client(target->getFd(), PRIV_SUCCESS(client->getNickName(), client->getUserName(), params[0], params[1]));
     }
 }

@@ -14,19 +14,20 @@ void Channel::invite(Server *server, Client *client, std::string param)
 
     Client *target = server->getClient(params[0]);
     Channel *channel = server->getChannel(params[1]);
-    if (!target || !channel)
+    if (!target || !channel || !target->isConnected())
     {
         std::string target_str = !target ? params[0] : params[1];
         return server->SendMsg2Client(client->getFd(), ERROR_401(client->getNickName(), target_str));
     }
     if (channel->is_exist(target))
         return server->SendMsg2Client(client->getFd(), ERROR_443(client->getNickName(), target->getNickName()));
-    if (channel->is_exist(client))
+    if (!channel->is_exist(client))
         return server->SendMsg2Client(client->getFd(), ERROR_442(client->getNickName(), channel->getName()));
     if (!channel->is_operator(client))
         return server->SendMsg2Client(client->getFd(), ERROR_482(client->getNickName(), channel->getName()));
     
-    channel->setInviteList(target->getNickName());
+    if (channel->is_mode_adaptation("i") && !channel->is_invited(target->getNickName()))
+        channel->setInviteList(target->getNickName());
     server->SendMsg2Client(client->getFd(), INVITE_SUCCESS(client->getNickName(), target->getNickName(), channel->getName()));
     server->SendMsg2Client(target->getFd(), INVITE_OTHER_CLIENT(client->getNickName(), client->getUserName(), target->getNickName(), channel->getName()));
 }
