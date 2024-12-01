@@ -15,7 +15,7 @@ Server::Server(int port, std::string password)
 	setCommand("NICK", &Client::nick);
 	setCommand("USER", &Client::user);
 	setCommand("PRIVMSG", &Client::privmsg);
-	// setCommand("QUIT", &Client::quit);
+	setCommand("QUIT", &Client::quit);
 
 	// channel
 	setCommand("JOIN", &Channel::join);
@@ -65,6 +65,18 @@ std::vector<std::string> Server::getChannelNames()
 	for (size_t i = 0; i < _channels.size(); i++)
 	{
 		ret.push_back(_channels[i]->getName());
+	}
+	return ret;
+}
+
+std::vector<Channel *>  Server::getClientChannels(std::string nickname)
+{
+	std::vector<Channel *> ret;
+
+	for (size_t i = 0; i < _channels.size(); i++)
+	{
+		if (_channels[i]->is_exist_string(nickname))
+			ret.push_back(_channels[i]);
 	}
 	return ret;
 }
