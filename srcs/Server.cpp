@@ -171,6 +171,8 @@ void Server::execute(Client *client, std::string command, std::string param)
 {
 	function fun = _commands[command];
 
+	if (command == "WHO")
+		return;
 	if (!fun && !client->isConnected())
 		return;
 	else if (!fun)
