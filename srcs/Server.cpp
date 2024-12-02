@@ -9,6 +9,7 @@ Server::Server(int port, std::string password)
 
 	// server
 	setCommand("CAP", &Server::cap);
+	setCommand("PING", &Server::ping);
 
 	// client
 	setCommand("PASS", &Client::pass);

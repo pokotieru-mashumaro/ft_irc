@@ -50,5 +50,7 @@ public:
 	void unsetChannel(Channel *channel);
 
 	static void cap(Server *server, Client *client, std::string param);
+	static void ping(Server *server, Client *client, std::string param);
 };
+
 #endif

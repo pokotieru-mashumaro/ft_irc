@@ -19,6 +19,7 @@
 
 #define ERROR_401(nickname, para) std::string(":" + SERVER_NAME + " 401 " + nickname + " " + para + " :No such nick or channel name")
 #define ERROR_403(nickname, channelname) std::string(":" + SERVER_NAME + " 403 " + nickname + " " + channelname + " :No such channeel")
+#define ERROR_409(nickname) std::string(":" + SERVER_NAME + " 409 " + nickname + " :No origin specified")
 #define ERROR_411(nickname) std::string(":" + SERVER_NAME + " 411 " + nickname + " :No recipient given (PRIVMSG)")
 #define ERROR_412(nickname) std::string(":" + SERVER_NAME + " 412 " + nickname + " :No text to send")
 #define ERROR_432(nickname) std::string(":" + SERVER_NAME + " 432 * " + nickname + " :Erroneous nickname")
