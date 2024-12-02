@@ -10,4 +10,6 @@ void Client::user(Server *server, Client *client, std::string param)
     
     client->setUserName(params[0]);
     client->setRealName(params[3]);
+    if (client->isConnected())
+        server->SendMsg2Client(client->getFd(), WELCOME(client->getNickName(), client->getUserName()));
 }

@@ -9,7 +9,7 @@
 
 #define SERVER_NAME  std::string("my_server")
 
-#define WELCOME(nickname) std::string(":" + SERVER_NAME + " 001 " + nickname + " :Welcome to server, " + nickname)
+#define WELCOME(nickname, username) std::string(":" + SERVER_NAME + " 001 " + nickname + " :Welcome to the Internet Relay Network" + nickname + "!~" + username + "@localhost")
 
 #define SYNTAX_ERROR(nickname, command) std::string(":" + SERVER_NAME + " 461 " + nickname + " " + command + " :Syntax error" )
 #define NOT_COMMAND_ERROR(nickname, command) std::string(":" + SERVER_NAME + " 421 " + nickname + " " + command + " :Unknown command")

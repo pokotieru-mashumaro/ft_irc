@@ -9,4 +9,6 @@ void Client::pass(Server *server, Client *client, std::string param)
 
     if (param == server->getPassword())
         client->setIsPassed(true);
+    if (client->isConnected())
+        server->SendMsg2Client(client->getFd(), WELCOME(client->getNickName(), client->getUserName()));
 }

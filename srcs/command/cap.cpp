@@ -15,5 +15,5 @@ void Server::cap(Server *server, Client *client, std::string param)
     else if (param == "REQ :multi-prefix")
         server->SendMsg2Client(client->getFd(), SERVER_NAME + " CAP * ACK :multi-prefix");
     else if (param == "END")
-        server->SendMsg2Client(client->getFd(), WELCOME(client->getNickName()));
+        server->SendMsg2Client(client->getFd(), WELCOME(client->getNickName(), client->getUserName()));
 }

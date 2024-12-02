@@ -1,10 +1,19 @@
 #include "../../includes/All.hpp"
 
 static bool contains_ng_ascii(const std::string& str) {
+    char ok_ascii[8] = {'|', '-', '[', ']', '{', '}', '_'};
+    int ng_count;
+
     for (int i = 0; i < (int)str.size(); ++i)
     {
         char ch = str[i];
-        if (!isalnum(ch))
+        ng_count = 0;
+        for (int j = 0; j < 7; j++) 
+            if (ch != ok_ascii[j])
+                ng_count++;
+        if (!isalnum(ch) && ng_count == 7)
+            return true;
+        else if (i ==0 && ch == '-')
             return true;
     }
     return false;
@@ -36,4 +45,6 @@ void Client::nick(Server *server, Client *client, std::string param)
         server->SendMsg2Client(client->getFd(), ERROR_433(param));
     else
         client->setNickName(param);
+    if (client->isConnected())
+        server->SendMsg2Client(client->getFd(), WELCOME(client->getNickName(), client->getUserName()));
 }
