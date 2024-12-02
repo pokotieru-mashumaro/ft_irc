@@ -117,6 +117,7 @@ void Server::ClearClients(int fd)
 			break;
 		}
 	}
+	close(fd);
 }
 
 bool Server::_is_signal = false;
@@ -187,8 +188,8 @@ void Server::ReceiveNewData(int fd, int i)
 	if (bytes <= 0)
 	{
 		std::cout << RED << "Client <" << fd << "> Disconnected" << WHI << std::endl;
-		ClearClients(fd);
-		close(fd);
+		execute(_clients[i], "QUIT", "");
+		delete _clients[i];
 	}
 	else
 	{
@@ -197,12 +198,6 @@ void Server::ReceiveNewData(int fd, int i)
 
 		std::string str = buff;
 		std::vector<std::string> lines = split_string(str, '\n');
-
-		// std::cout << "lines--------------------\n";
-		// for (size_t j = 0; j < lines.size(); j++)
-		// {
-		// 	std::cout << "line:" << lines[i] << std::endl;
-		// }
 
 		for (size_t j = 0; j < lines.size(); j++)
 		{
@@ -219,9 +214,6 @@ void Server::ReceiveNewData(int fd, int i)
 			}
 			execute(_clients[i], command, param);
 		}
-		// こんなのが必要な可能性あり チャッピー曰く
-		//  _fds[i].events = POLLIN | POLLHUP;
-		//  _fds[i].revents = 0;
 	}
 }
 
@@ -236,15 +228,9 @@ void Server::AcceptNewClient()
 	len = sizeof(cliadd);
 	incofd = accept(_socket_fd, (sockaddr *)&(cliadd), &len);
 	if (incofd == -1)
-	{
-		std::cout << "accept() failed" << std::endl;
 		return;
-	}
 	if (fcntl(incofd, F_SETFL, O_NONBLOCK) == -1)
-	{
-		std::cout << "fcntl() failed" << std::endl;
 		return;
-	}
 	NewPoll.fd = incofd;
 	NewPoll.events = POLLIN;
 	NewPoll.revents = 0;
