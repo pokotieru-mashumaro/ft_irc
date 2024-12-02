@@ -121,6 +121,18 @@ void Server::ClearClients(int fd)
 	close(fd);
 }
 
+void Server::deleteAll()
+{
+	for (size_t i = 0; i < _channels.size(); i++)
+	{
+		delete _channels[i];
+	}
+	for (size_t i = 0; i < _clients.size(); i++)
+	{
+		delete _clients[i];
+	}
+}
+
 bool Server::_is_signal = false;
 void Server::SignalHandler(int signum)
 {
@@ -205,7 +217,7 @@ void Server::ReceiveNewData(int fd, int i)
 		for (size_t j = 0; j < lines.size(); j++)
 		{
 
-			std::string command = trim(lines[j]);
+			std::string command = trim_space(lines[j]);
 			std::string param = "";
 			size_t spaceIndex = lines[j].find(' ');
 
@@ -213,7 +225,7 @@ void Server::ReceiveNewData(int fd, int i)
 			{
 				command = lines[j].substr(0, spaceIndex);
 				param = lines[j].substr(spaceIndex + 1);
-				param = trim(param);
+				param = trim_space(param);
 			}
 			execute(_clients[i], command, param);
 		}
@@ -292,4 +304,5 @@ void Server::ServerInit()
 		}
 	}
 	CloseFds();
+	deleteAll();
 }

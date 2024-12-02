@@ -1,6 +1,6 @@
 #include "../../includes/All.hpp"
 
-std::string trim(std::string str) 
+std::string trim_space(std::string str) 
 {
     int length;
     while (!str.empty() && isspace(*str.begin()))

@@ -31,6 +31,7 @@ public:
 
 	void CloseFds();
 	void ClearClients(int fd);
+	void deleteAll();
 
 	void SendMsg2Client(int cli_fd, std::string str);
 	void SendMsg2Channnel(Client  *client, Channel *channel, std::string str);

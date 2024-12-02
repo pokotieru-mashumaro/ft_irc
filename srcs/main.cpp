@@ -21,12 +21,14 @@ int main(int ac, char **av)
 	Server ser(atoi(av[1]), av[2]);
 
 	std::cout << "---- SERVER ----" << std::endl;
-	try{
+	try
+	{
 		signal(SIGINT, Server::SignalHandler);
 		signal(SIGQUIT, Server::SignalHandler);
 		ser.ServerInit();
 	}
-	catch(const std::exception& e){
+	catch(const std::exception& e)
+	{
 		ser.CloseFds();
 		std::cerr << e.what() << std::endl;
 	}
