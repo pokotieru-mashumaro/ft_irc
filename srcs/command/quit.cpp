@@ -20,6 +20,11 @@ void Client::quit(Server *server, Client *client, std::string param)
         bye_channels[i]->unsetClient(client);
         if (bye_channels[i]->is_operator(client))
             bye_channels[i]->unsetOperaor(client);
+        if (bye_channels[i]->getClients().size() == 0)
+        {
+            server->unsetChannel(bye_channels[i]);
+            delete bye_channels[i];
+        }
     }
     server->ClearClients(client->getFd());
 }

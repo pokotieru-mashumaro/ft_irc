@@ -14,12 +14,15 @@ std::vector<std::string> split_string(std::string str, char c)
     std::vector<std::string> elems;
     std::string item;
 
-    for (size_t i = 0; i < str.length(); i++) {
-        if (str[i] == c && (item.empty() || item[0] != ':')) {
+    for (size_t i = 0; i < str.length(); i++) 
+    {
+        if (str[i] == c && (item.empty() || item[0] != ':')) 
+        {
             if (!item.empty())
                 elems.push_back(item);
             item.clear();
-        } else {
+        } else 
+        {
             item += str[i];
         }
     }
