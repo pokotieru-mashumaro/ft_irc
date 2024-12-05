@@ -9,24 +9,23 @@ std::string trim_space(std::string str)
     return str.substr(0, length + 1);
 }
 
-std::vector<std::string> split_string(std::string str, char c)
+std::vector<std::string> split_string(std::string str, char c) 
 {
     std::vector<std::string> elems;
-	std::string item;
+    std::string item;
 
-	for (size_t i = 0; i < str.length(); i++) {
-		if (str[i] == c) {
-			if (!item.empty())
-				elems.push_back(item);
-			item.clear();
-		}
-		else {
-			item += str[i];
-		}
-	}
-	if (!item.empty())
-		elems.push_back(item);
-	return elems;
+    for (size_t i = 0; i < str.length(); i++) {
+        if (str[i] == c && (item.empty() || item[0] != ':')) {
+            if (!item.empty())
+                elems.push_back(item);
+            item.clear();
+        } else {
+            item += str[i];
+        }
+    }
+    if (!item.empty())
+        elems.push_back(item);
+    return elems;
 }
 
 size_t s2st_for_mode_l(std::string str) 
