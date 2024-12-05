@@ -161,6 +161,8 @@ void Server::CloseFds()
 
 void Server::SendMsg2Client(int cli_fd, std::string str)
 {
+	if (str != "" && str[0] == ':')
+		str.erase(0, 1);
 	str = str + +"\r\n";
 	ssize_t bytes = send(cli_fd, str.c_str(), str.length(), 0);
 	if (bytes == -1)

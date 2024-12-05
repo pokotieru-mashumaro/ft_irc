@@ -30,7 +30,6 @@ void Client::privmsg(Server *server, Client *client, std::string param)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "PRIVMSG"));
     if (!is_ok_target(server, params[0]))
         return server->SendMsg2Client(client->getFd(), ERROR_401(client->getNickName(), params[0]));
-        
     if (params[0][0] == '#')
     {
         Channel *channel = server->getChannel(params[0]);
