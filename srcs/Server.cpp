@@ -207,7 +207,7 @@ void Server::ReceiveNewData(int fd, int i)
 	{
 		std::cout << RED << "Client <" << fd << "> Disconnected" << WHI << std::endl;
 		execute(_clients[i], "QUIT", "");
-		delete _clients[i];
+		// delete _clients[i];
 	}
 	else
 	{
@@ -256,7 +256,7 @@ void Server::AcceptNewClient()
 	cli->setIpAdd(inet_ntoa((cliadd.sin_addr)));
 	_clients.push_back(cli);
 	_fds.push_back(NewPoll);
-	std::cout << GRE << "Client <" << incofd << "> Connected" << WHI << std::endl;
+	std::cout << GRE << "Client <" << incofd << "> Connected. address: " << cli << WHI << std::endl;
 }
 
 void Server::SerSocket()
