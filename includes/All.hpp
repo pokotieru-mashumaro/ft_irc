@@ -13,6 +13,10 @@
 #include <arpa/inet.h>
 #include <poll.h>
 #include <csignal>
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
 
 #include "Utils.hpp"
 #include "Channel.hpp"

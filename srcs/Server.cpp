@@ -126,10 +126,13 @@ void Server::deleteAll()
 	for (size_t i = 0; i < _channels.size(); i++)
 	{
 		delete _channels[i];
+		// std::cout << "hello1" << std::endl;
 	}
+	// std::cout << "hello1-----" << std::endl;
 	for (size_t i = 0; i < _clients.size(); i++)
 	{
 		delete _clients[i];
+		// std::cout << "hello2" << std::endl;
 	}
 }
 

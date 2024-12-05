@@ -6,7 +6,7 @@ bool check_arg(char **av)
 
 	for (size_t i = 0; i < strlen(av[1]); i++)
 	{
-		if (!isnumber(av[1][i]))
+		if ('0' > av[1][i] || av[1][i] > '9')
 			return false;
 	}
 	if (port < 0 || port > 65535)
