@@ -33,6 +33,8 @@ void Client::privmsg(Server *server, Client *client, std::string param)
     if (params[0][0] == '#')
     {
         Channel *channel = server->getChannel(params[0]);
+        if (!channel->is_exist(client))
+            return;
         return server->SendMsg2Channnel(client, channel, PRIV_SUCCESS(client->getNickName(), client->getUserName(), params[0], params[1]));
     }
     else
