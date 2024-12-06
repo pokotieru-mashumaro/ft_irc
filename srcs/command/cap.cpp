@@ -9,7 +9,6 @@ void Server::cap(Server *server, Client *client, std::string param)
 
     if (param == "LS 302")
     {
-        std::cout << "param: " << param << std::endl;
         server->SendMsg2Client(client->getFd(), SERVER_NAME + " CAP * LS :multi-prefix");
     }
     else if (param == "REQ :multi-prefix")
