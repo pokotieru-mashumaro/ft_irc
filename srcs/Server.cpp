@@ -293,21 +293,23 @@ void Server::ServerInit()
 	SerSocket();
 	std::cout << GRE << "Server <" << _socket_fd << "> Connected" << WHI << std::endl;
 	std::cout << "Waiting to accept a connection...\n";
-	while (Server::_is_signal == false)
+	while (!Server::_is_signal) 
 	{
-		if ((poll(&_fds[0], _fds.size(), -1) == -1) && Server::_is_signal == false)
-			throw(std::runtime_error("poll() faild"));
-		for (size_t i = 0; i < _fds.size(); i++)
+        int poll_result = poll(&_fds[0], _fds.size(), -1);
+        if (poll_result == -1 && !Server::_is_signal) 
+            throw std::runtime_error("poll() failed");
+        
+        for (size_t i = 0; i < _fds.size(); ++i) 
 		{
-			if (_fds[i].revents & POLLIN)
+			if (_fds[i].revents & POLLIN) 
 			{
-				if (_fds[i].fd == _socket_fd)
-					AcceptNewClient();
-				else
-					ReceiveNewData(_fds[i].fd, i - 1); // i-1: _fdsの先頭はサーバーのfd、_clientsの先頭はclientだから一つ詰まっている
-			}
-		}
-	}
+                if (_fds[i].fd == _socket_fd) 
+                    AcceptNewClient();
+                else 
+                    ReceiveNewData(_fds[i].fd, i - 1);
+            }
+        }
+    }
 	CloseFds();
 	deleteAll();
 }

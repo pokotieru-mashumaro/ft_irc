@@ -9,7 +9,7 @@ bool check_arg(char **av)
 		if ('0' > av[1][i] || av[1][i] > '9')
 			return false;
 	}
-	if (port < 0 || port > 65535)
+	if (port < 1024 || port > 65535)
 		return false;
 	return true;
 }
