@@ -1,7 +1,7 @@
 #include "../../includes/All.hpp"
 
 #define INVITE_SUCCESS(nickname, targetname, channelname) std::string(":" + SERVER_NAME + " 341 " + nickname + " " + targetname + " " + channelname)
-#define INVITE_OTHER_CLIENT(nickname, username, targetnick, channelname) std::string(":" + nickname + "!~" + username + "@localhost INVITE :" + targetnick + " " + channelname)
+#define INVITE_OTHER_CLIENT(nickname, username, targetnick, channelname) std::string(":" + nickname + "!~" + username + "@localhost INVITE " + targetnick + " " + channelname)
 
 void Channel::invite(Server *server, Client *client, std::string param)
 {
