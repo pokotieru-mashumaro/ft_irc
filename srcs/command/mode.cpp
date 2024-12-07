@@ -69,7 +69,7 @@ static void mode_cmd_k(Server *server, Client *client, Channel *channel, std::ve
     }
     else if (params[1] == "-k" && channel->is_mode_adaptation("k"))
     {
-        if (params.size() != 2)
+        if (params.size() != 2 && params.size() != 3)
             return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
         channel->unsetMode("k");
         channel->setPassword("");
