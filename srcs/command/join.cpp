@@ -59,11 +59,11 @@ void Channel::join(Server *server, Client *client, std::string param)
     if (is_already_exist_client(channel, client->getNickName()))
         return;
     if (channel->is_mode_adaptation("l") && channel->getClients().size() >= channel->getMaxNum())
-        return server->SendMsg2Client(client->getFd(), ERROR_471(client->getNickName(), client->getUserName()));
+        return server->SendMsg2Client(client->getFd(), ERROR_471(client->getNickName(), channel->getName()));
     if (channel->is_mode_adaptation("i") && !channel->is_invited(client->getNickName()))
-        return server->SendMsg2Client(client->getFd(), ERROR_473(client->getNickName(), client->getUserName()));
+        return server->SendMsg2Client(client->getFd(), ERROR_473(client->getNickName(), channel->getName()));
     if (channel->is_mode_adaptation("k") && (params.size() != 2 || channel->getPassword() != params[1]))
-        return server->SendMsg2Client(client->getFd(), ERROR_475(client->getNickName(), client->getUserName()));
+        return server->SendMsg2Client(client->getFd(), ERROR_475(client->getNickName(), channel->getName()));
 
     channel->setClient(client);
     channel->setName(params[0]);

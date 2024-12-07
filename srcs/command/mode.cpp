@@ -3,6 +3,14 @@
 #define MODE_SUCCESS(nickname, username, channelname, param) std::string(":" + nickname + "!~" + username + "@localhost MODE " + channelname + " " + param)
 #define MODE_SUCCESS2(nickname, username, channelname, param1, param2) std::string(":" + nickname + "!~" + username + "@localhost MODE " + channelname + " " + param1 + " " + param2)
 
+/*
+:naishomarunosukenomacbook-air.local 475 i #123 :Cannot join channel (+k) -- Wrong channel key
+:my_server 475 i i :Cannot join channel (+k) -- Wrong channel key
+
+:a!~a@localhost MODE #123 -k *
+:a!~a@localhost MODE #123 +k hello
+*/
+
 static bool is_mode(std::string target, std::string para)
 {
     if (target == para || target == "+" + para || target == "-" + para)
