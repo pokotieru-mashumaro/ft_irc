@@ -1,8 +1,11 @@
 #include "../../includes/All.hpp"
 
-#define TOPIC_SUCCESS1(nickname, username, channelname, topic) std::string(":" + nickname + "!~" + username + "@localhost TOPIC :" + channelname +  " :" + topic)
+#define TOPIC_SUCCESS1(nickname, username, channelname, topic) std::string(":" + nickname + "!~" + username + "@localhost TOPIC " + channelname +  " :" + topic)
 #define TOPIC_SUCCESS2(nickname, channelname, topic) std::string(":" + SERVER_NAME + " 332 " + nickname + " " + channelname + " :" + topic)
 
+/*
+:iniad!~iniad@localhost TOPIC #123 :piano
+*/
 void Channel::topic(Server *server, Client *client, std::string param)
 {
     if (!client->isConnected())

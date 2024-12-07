@@ -1,6 +1,6 @@
 #include "../../includes/All.hpp"
 
-#define KICK_SUCCESS(nickname, username, channelname, targetnick, msg) std::string(":" + nickname + "!~" + username + "@localhost KICK :" + channelname + " " + targetnick +  " :" + msg)
+#define KICK_SUCCESS(nickname, username, channelname, targetnick, msg) std::string(":" + nickname + "!~" + username + "@localhost KICK " + channelname + " " + targetnick +  " :" + msg)
 
 void Channel::kick(Server *server, Client *client, std::string param)
 {
