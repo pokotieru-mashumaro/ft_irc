@@ -1,7 +1,7 @@
 #include "../../includes/All.hpp"
 
-#define MODE_SUCCESS(nickname, username, param) std::string(":" + nickname + "!~" + username + "@localhost MODE " + param)
-#define MODE_SUCCESS2(nickname, username, param1, param2) std::string(":" + nickname + "!~" + username + "@localhost MODE " + param1 + " " + param2)
+#define MODE_SUCCESS(nickname, username, channelname, param) std::string(":" + nickname + "!~" + username + "@localhost MODE " + channelname + " " + param)
+#define MODE_SUCCESS2(nickname, username, channelname, param1, param2) std::string(":" + nickname + "!~" + username + "@localhost MODE " + channelname + " " + param1 + " " + param2)
 
 static bool is_mode(std::string target, std::string para)
 {
@@ -18,14 +18,14 @@ static void mode_cmd_i(Server *server, Client *client, Channel *channel, std::ve
     if ((params[1] == "i" || params[1] == "+i") && !channel->is_mode_adaptation("i"))
     {
         channel->setMode("i");
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), "+i"));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), "+i"));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "+i"));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "+i"));
     }
     else if (params[1] == "-i" && channel->is_mode_adaptation("i"))
     {
         channel->unsetMode("i");
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), "-i"));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), "-i"));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "-i"));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "-i"));
     }
 }
 
@@ -37,14 +37,14 @@ static void mode_cmd_t(Server *server, Client *client, Channel *channel, std::ve
     if ((params[1] == "t" || params[1] == "+t") && !channel->is_mode_adaptation("t"))
     {
         channel->setMode("t");
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), "+t"));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), "+t"));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "+t"));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "+t"));
     }
     else if (params[1] == "-t" && channel->is_mode_adaptation("t"))
     {
         channel->unsetMode("t");
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), "-t"));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), "-t"));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "-t"));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "-t"));
     }
 }
 
@@ -56,8 +56,8 @@ static void mode_cmd_k(Server *server, Client *client, Channel *channel, std::ve
             return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
         channel->setMode("k");
         channel->setPassword(params[2]);
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), "+k", params[2]));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), "+k", params[2]));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "+k", params[2]));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "+k", params[2]));
     }
     else if (params[1] == "-k" && channel->is_mode_adaptation("k"))
     {
@@ -65,8 +65,8 @@ static void mode_cmd_k(Server *server, Client *client, Channel *channel, std::ve
             return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
         channel->unsetMode("k");
         channel->setPassword("");
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), "-k", "*"));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), "-k", "*"));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "-k", "*"));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "-k", "*"));
     }
 }
 
@@ -87,16 +87,16 @@ static void mode_cmd_o(Server *server, Client *client, Channel *channel, std::ve
         if (channel->is_operator(target))
             return;
         channel->setOperator(target);
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), "+o", params[2]));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), "+o", params[2]));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "+o", params[2]));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "+o", params[2]));
     }
     else if (params[1] == "-o")
     {
         if (!channel->is_operator(target))
             return;
         channel->unsetOperaor(target);
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), "-o", params[2]));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), "-o", params[2]));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "-o", params[2]));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "-o", params[2]));
     }
 }
 
@@ -113,8 +113,8 @@ static void mode_cmd_l(Server *server, Client *client, Channel *channel, std::ve
 
         channel->setMode("l");
         channel->setMaxNum(num);
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), "+l", params[2]));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), "+l", params[2]));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "+l", params[2]));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS2(client->getNickName(), client->getUserName(), channel->getName(), "+l", params[2]));
     }
     else if (params[1] == "-l" && channel->is_mode_adaptation("l"))
     {
@@ -122,8 +122,8 @@ static void mode_cmd_l(Server *server, Client *client, Channel *channel, std::ve
             return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
         
         channel->unsetMode("l");
-        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), "-l"));
-        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), "-l"));
+        server->SendMsg2Channnel(client, channel, MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "-l"));
+        return server->SendMsg2Client(client->getFd(), MODE_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), "-l"));
     }
 }
 

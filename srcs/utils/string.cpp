@@ -19,7 +19,11 @@ std::vector<std::string> split_string(std::string str, char c)
         if (str[i] == c && (item.empty() || item[0] != ':')) 
         {
             if (!item.empty())
+            {
+                if (c == ' ' && item[0] == ':')
+			        item.erase(0, 1);
                 elems.push_back(item);
+            }
             item.clear();
         } else 
         {
