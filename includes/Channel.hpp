@@ -18,7 +18,6 @@ private:
 public:
 	Channel(std::string name);
 
-    // Client getOperator(){return _operator;};
     std::string getName() const {return _name;};
     std::string getPassword() const {return _password;};
     std::string getTopic() const {return _topic;};

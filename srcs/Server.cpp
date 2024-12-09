@@ -70,7 +70,7 @@ std::vector<std::string> Server::getChannelNames()
 	return ret;
 }
 
-std::vector<Channel *>  Server::getClientChannels(std::string nickname)
+std::vector<Channel *> Server::getClientChannels(std::string nickname)
 {
 	std::vector<Channel *> ret;
 
