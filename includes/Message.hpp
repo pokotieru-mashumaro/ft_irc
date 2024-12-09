@@ -38,13 +38,3 @@
 #define ERROR_696(nickname, channnelname, param) std::string(":" + SERVER_NAME + " 696" + nickname + " " + channnelname + " " + param + " * :Invalid mode parameter")
 
 #endif
-
-
-/*
-ダメだったとこ
-
-
-MODE #123 -k
-:my_server 461 kota MODE :Syntax error
-
-*/

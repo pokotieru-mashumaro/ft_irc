@@ -20,7 +20,6 @@ int main(int ac, char **av)
 		return 1;
 	Server ser(atoi(av[1]), av[2]);
 
-	std::cout << "---- SERVER ----" << std::endl;
 	try
 	{
 		signal(SIGINT, Server::SignalHandler);
@@ -32,5 +31,4 @@ int main(int ac, char **av)
 		ser.CloseFds();
 		std::cerr << e.what() << std::endl;
 	}
-	std::cout << "The Server Closed!" << std::endl;
 }

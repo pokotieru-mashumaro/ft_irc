@@ -124,39 +124,24 @@ void Server::ClearClients(int fd)
 void Server::deleteAll()
 {
 	for (size_t i = 0; i < _channels.size(); i++)
-	{
 		delete _channels[i];
-		// std::cout << "hello1" << std::endl;
-	}
-	// std::cout << "hello1-----" << std::endl;
 	for (size_t i = 0; i < _clients.size(); i++)
-	{
 		delete _clients[i];
-		// std::cout << "hello2" << std::endl;
-	}
 }
 
 bool Server::_is_signal = false;
 void Server::SignalHandler(int signum)
 {
 	(void)signum;
-	std::cout << std::endl
-			  << "Signal Received!" << std::endl;
 	Server::_is_signal = true;
 }
 
 void Server::CloseFds()
 {
 	for (size_t i = 0; i < _clients.size(); i++)
-	{
-		std::cout << RED << "Client <" << _clients[i]->getFd() << "> Disconnected" << WHI << std::endl;
 		close(_clients[i]->getFd());
-	}
 	if (_socket_fd != -1)
-	{
-		std::cout << RED << "Server <" << _socket_fd << "> Disconnected" << WHI << std::endl;
 		close(_socket_fd);
-	}
 }
 
 void Server::SendMsg2Client(int cli_fd, std::string str)
@@ -204,15 +189,10 @@ void Server::ReceiveNewData(int fd, int i)
 	memset(buff, 0, sizeof(buff));
 	bytes = recv(fd, buff, sizeof(buff) - 1, 0);
 	if (bytes <= 0)
-	{
-		std::cout << RED << "Client <" << fd << "> Disconnected" << WHI << std::endl;
 		execute(_clients[i], "QUIT", "");
-		// delete _clients[i];
-	}
 	else
 	{
 		buff[bytes] = '\0';
-		std::cout << YEL << "Client <" << fd << "> Data: " << WHI << buff;
 
 		std::string str = buff;
 		std::vector<std::string> lines = split_string(str, '\n');
@@ -256,7 +236,6 @@ void Server::AcceptNewClient()
 	cli->setIpAdd(inet_ntoa((cliadd.sin_addr)));
 	_clients.push_back(cli);
 	_fds.push_back(NewPoll);
-	std::cout << GRE << "Client <" << incofd << "> Connected. address: " << cli << WHI << std::endl;
 }
 
 void Server::SerSocket()
@@ -289,8 +268,6 @@ void Server::SerSocket()
 void Server::ServerInit()
 {
 	SerSocket();
-	std::cout << GRE << "Server <" << _socket_fd << "> Connected" << WHI << std::endl;
-	std::cout << "Waiting to accept a connection...\n";
 	while (!Server::_is_signal) 
 	{
         int poll_result = poll(&_fds[0], _fds.size(), -1);
