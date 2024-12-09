@@ -27,7 +27,7 @@
 #define ERROR_441(nickname, targetnick, channelname) std::string(":" + SERVER_NAME + " 441 " + nickname + " " + targetnick + " " + channelname + " :They aren't on that channel")
 #define ERROR_442(nickname, channelname) std::string(":" + SERVER_NAME + " 442 " + nickname + " " + channelname + " :You are not on that channel")
 #define ERROR_443(nickname, targetnick) std::string(":" + SERVER_NAME + " 443 " + nickname + " " + targetnick + " :is already on channel")
-#define ERROR_471(nickname, channelname) std::string(":" + SERVER_NAME + " 473 " + nickname + " " + channelname + " :Cannot join channel (+l) -- Channel is full, try later")
+#define ERROR_471(nickname, channelname) std::string(":" + SERVER_NAME + " 471 " + nickname + " " + channelname + " :Cannot join channel (+l) -- Channel is full, try later")
 #define ERROR_473(nickname, channelname) std::string(":" + SERVER_NAME + " 473 " + nickname + " " + channelname + " :Cannot join channel (+i) -- Invited users only")
 #define ERROR_475(nickname, channelname) std::string(":" + SERVER_NAME + " 475 " + nickname + " " + channelname + " :Cannot join channel (+k) -- Wrong channel key")
 

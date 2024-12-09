@@ -58,7 +58,7 @@ static void mode_cmd_t(Server *server, Client *client, Channel *channel, std::ve
 
 static void mode_cmd_k(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
-    if ((params[1] == "k" || params[1] == "+k") && !channel->is_mode_adaptation("k"))
+    if (params[1] == "k" || params[1] == "+k")
     {
         if (params.size() != 3)
             return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
@@ -110,7 +110,7 @@ static void mode_cmd_o(Server *server, Client *client, Channel *channel, std::ve
 
 static void mode_cmd_l(Server *server, Client *client, Channel *channel, std::vector<std::string> params)
 {
-    if ((params[1] == "l" || params[1] == "+l") && !channel->is_mode_adaptation("l"))
+    if (params[1] == "l" || params[1] == "+l")
     {
         if (params.size() != 3)
             return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "MODE"));
