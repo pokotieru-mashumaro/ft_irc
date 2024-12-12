@@ -146,7 +146,9 @@ void Server::CloseFds()
 
 void Server::SendMsg2Client(int cli_fd, std::string str)
 {
-	str = str + +"\r\n";
+	str = str + "\r\n";
+	if (str[0] == ':')
+		str.erase(0, 1);
 	ssize_t bytes = send(cli_fd, str.c_str(), str.length(), 0);
 	if (bytes == -1)
 		std::cout << RED << "やばいよやばいよ" << WHI << std::endl;
@@ -154,7 +156,9 @@ void Server::SendMsg2Client(int cli_fd, std::string str)
 
 void Server::SendMsg2Channnel(Client  *client, Channel *channel, std::string str)
 {
-	str = str + +"\r\n";
+	str = str + "\r\n";
+	if (str[0] == ':')
+		str.erase(0, 1);
 	std::vector<Client *>clients = channel->getClients();
 	for (size_t i = 0; i < clients.size(); i++)
 	{
