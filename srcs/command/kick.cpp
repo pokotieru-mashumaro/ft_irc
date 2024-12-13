@@ -6,7 +6,7 @@ void Channel::kick(Server *server, Client *client, std::vector<std::string> para
 {
     if (!client->isConnected())
         return server->SendMsg2Client(client->getFd(), NOT_CONNECT(client->getNickName()));
-        
+
     if (params.size() != 2 && params.size() != 3)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "KICK"));
 
@@ -26,4 +26,9 @@ void Channel::kick(Server *server, Client *client, std::vector<std::string> para
     server->SendMsg2Client(client->getFd(), KICK_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), target->getNickName(), msg));
     server->SendMsg2Client(target->getFd(), KICK_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), target->getNickName(), msg));
     server->SendMsg2Channnel(client, channel, KICK_SUCCESS(client->getNickName(), client->getUserName(), channel->getName(), target->getNickName(), msg));
+    if (channel->getClients().empty())
+    {
+        server->unsetChannel(channel);
+        delete channel;
+    }
 }

@@ -30,13 +30,13 @@ void Channel::part(Server *server, Client *client, std::vector<std::string> para
     
     channel->unsetClient(client);
     channel->unsetOperaor(client);
+    std::string message = params.size() == 2 ? params[1] : "";
+
+    server->SendMsg2Channnel(client, channel, PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
+    server->SendMsg2Client(client->getFd(), PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
     if (channel->getClients().empty())
     {
         server->unsetChannel(channel);
         delete channel;
     }
-    std::string message = params.size() == 2 ? params[1] : "";
-
-    server->SendMsg2Channnel(client, channel, PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
-    server->SendMsg2Client(client->getFd(), PART_SUCCESS(client->getNickName(), client->getUserName(), params[0], message));
 }
