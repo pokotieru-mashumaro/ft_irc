@@ -1,10 +1,7 @@
 #include "../../includes/All.hpp"
 
-void Client::user(Server *server, Client *client, std::string param)
+void Client::user(Server *server, Client *client, std::vector<std::string> params)
 {
-    std::vector<std::string> params;
-
-    params = split_string(param, ' ');
     if (params.size() != 4)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "USER"));
     

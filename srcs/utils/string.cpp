@@ -53,3 +53,18 @@ size_t s2st_for_mode_l(std::string str)
 
     return result;
 }
+
+void cut_colon_params(std::vector<std::string> &params)
+{
+    for (size_t i = 0; i < params.size(); i++)
+    {
+        if (params[i][0] == ':')
+            params[i] = params[i].substr(1);
+    }
+}
+
+void debug_params(std::vector<std::string> params)
+{
+    for (size_t i = 0; i < params.size(); i++)
+        std::cout << "params[" << i << "] = " << params[i] << std::endl;
+}

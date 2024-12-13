@@ -3,7 +3,7 @@
 
 class Server;
 
-typedef void (*function)(Server *server, Client *client, std::string data);
+typedef void (*function)(Server *server, Client *client, std::vector<std::string> data);
 
 class Server
 {
@@ -35,7 +35,7 @@ public:
 
 	void SendMsg2Client(int cli_fd, std::string str);
 	void SendMsg2Channnel(Client  *client, Channel *channel, std::string str);
-	void execute(Client *client, std::string command, std::string param);
+	void execute(Client *client, std::string command, std::vector<std::string>);
 
 	std::string getPassword(){return _password;};
 	std::vector<Channel *> getChannels(){return _channels;};
@@ -50,8 +50,8 @@ public:
 
 	void unsetChannel(Channel *channel);
 
-	static void cap(Server *server, Client *client, std::string param);
-	static void ping(Server *server, Client *client, std::string param);
+	static void cap(Server *server, Client *client, std::vector<std::string> params);
+	static void ping(Server *server, Client *client, std::vector<std::string> params);
 };
 
 #endif

@@ -14,13 +14,11 @@ static bool is_not_join(Channel *channel, std::string nickname)
     return true;
 }
 
-void Channel::part(Server *server, Client *client, std::string param)
+void Channel::part(Server *server, Client *client, std::vector<std::string> params)
 {
-    std::vector<std::string> params;
 
     if (!client->isConnected())
         return server->SendMsg2Client(client->getFd(), NOT_CONNECT(client->getNickName()));
-    params = split_string(param, ' ');
     if (params.size() != 1 && params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "PART"));
 

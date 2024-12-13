@@ -35,17 +35,14 @@ static bool is_already_exist_client(Channel *channel, std::string client_name)
     return false;
 }
 
-void Channel::join(Server *server, Client *client, std::string param)
+void Channel::join(Server *server, Client *client, std::vector<std::string> params)
 {
-    std::vector<std::string> params;
-
     if (!client->isConnected())
         return server->SendMsg2Client(client->getFd(), NOT_CONNECT(client->getNickName()));
-    params = split_string(param, ' ');
     if (params.size() != 1 && params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "JOIN"));
     if (params[0][0] != '#')
-        return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), param));
+        return server->SendMsg2Client(client->getFd(), ERROR_403(client->getNickName(), params[0]));
 
     Channel *channel = server->getChannel(params[0]);
     if (channel == NULL)

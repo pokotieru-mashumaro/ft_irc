@@ -6,12 +6,10 @@
 /*
 :iniad!~iniad@localhost TOPIC #123 :piano
 */
-void Channel::topic(Server *server, Client *client, std::string param)
+void Channel::topic(Server *server, Client *client, std::vector<std::string> params)
 {
     if (!client->isConnected())
         return server->SendMsg2Client(client->getFd(), NOT_CONNECT(client->getNickName()));
-    std::vector<std::string> params = split_string(param, ' ');
-
     if (params.size() != 1 && params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "TOPIC"));
     

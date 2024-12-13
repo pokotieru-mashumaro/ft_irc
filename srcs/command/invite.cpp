@@ -3,11 +3,10 @@
 #define INVITE_SUCCESS(nickname, targetname, channelname) std::string(":" + SERVER_NAME + " 341 " + nickname + " " + targetname + " " + channelname)
 #define INVITE_OTHER_CLIENT(nickname, username, targetnick, channelname) std::string(":" + nickname + "!~" + username + "@localhost INVITE " + targetnick + " " + channelname)
 
-void Channel::invite(Server *server, Client *client, std::string param)
+void Channel::invite(Server *server, Client *client, std::vector<std::string> params)
 {
     if (!client->isConnected())
         return server->SendMsg2Client(client->getFd(), NOT_CONNECT(client->getNickName()));
-    std::vector<std::string> params = split_string(param, ' ');
 
     if (params.size() != 2)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "INVITE"));

@@ -32,19 +32,16 @@ static bool is_duplicate_nickname(Server *server, std::string param)
     return false;
 }
 
-void Client::nick(Server *server, Client *client, std::string param)
+void Client::nick(Server *server, Client *client, std::vector<std::string> params)
 {
-    // std::cout << "param:" << param << std::endl;
-    size_t spaceIndex = param.find(' ');
-
-    if (param == "" || spaceIndex != std::string::npos)
+    if (params.size() != 1)
         server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "NICK"));
-    else if (contains_ng_ascii(param))
-        server->SendMsg2Client(client->getFd(), ERROR_432(param));
-    else if (is_duplicate_nickname(server, param))
-        server->SendMsg2Client(client->getFd(), ERROR_433(param));
+    else if (contains_ng_ascii(params[0]))
+        server->SendMsg2Client(client->getFd(), ERROR_432(params[0]));
+    else if (is_duplicate_nickname(server, params[0]))
+        server->SendMsg2Client(client->getFd(), ERROR_433(params[0]));
     else
-        client->setNickName(param);
+        client->setNickName(params[0]);
     if (client->isConnected())
         server->SendMsg2Client(client->getFd(), WELCOME(client->getNickName(), client->getUserName()));
 }

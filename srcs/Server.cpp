@@ -147,8 +147,6 @@ void Server::CloseFds()
 void Server::SendMsg2Client(int cli_fd, std::string str)
 {
 	str = str + "\r\n";
-	if (str[0] == ':')
-		str.erase(0, 1);
 	ssize_t bytes = send(cli_fd, str.c_str(), str.length(), 0);
 	if (bytes == -1)
 		std::cout << RED << "やばいよやばいよ" << WHI << std::endl;
@@ -157,8 +155,6 @@ void Server::SendMsg2Client(int cli_fd, std::string str)
 void Server::SendMsg2Channnel(Client  *client, Channel *channel, std::string str)
 {
 	str = str + "\r\n";
-	if (str[0] == ':')
-		str.erase(0, 1);
 	std::vector<Client *>clients = channel->getClients();
 	for (size_t i = 0; i < clients.size(); i++)
 	{
@@ -171,29 +167,30 @@ void Server::SendMsg2Channnel(Client  *client, Channel *channel, std::string str
 	}
 }
 
-void Server::execute(Client *client, std::string command, std::string param)
+void Server::execute(Client *client, std::string command, std::vector<std::string> params)
 {
 	function fun = _commands[command];
 
 	if (command == "WHO" || command == "WHOIS")
-		return;
+		return;	
 	if (!fun && !client->isConnected())
 		return;
 	else if (!fun)
 		SendMsg2Client(client->getFd(), NOT_COMMAND_ERROR(client->getNickName(), command));
 	else
-		(fun)(this, client, param);
+		(fun)(this, client, params);
 }
 
 void Server::ReceiveNewData(int fd, int i)
 {
 	char buff[1024];
 	ssize_t bytes;
+	std::vector<std::string> params;
 
 	memset(buff, 0, sizeof(buff));
 	bytes = recv(fd, buff, sizeof(buff) - 1, 0);
 	if (bytes <= 0)
-		execute(_clients[i], "QUIT", "");
+		execute(_clients[i], "QUIT", params);
 	else
 	{
 		buff[bytes] = '\0';
@@ -213,8 +210,10 @@ void Server::ReceiveNewData(int fd, int i)
 				command = lines[j].substr(0, spaceIndex);
 				param = lines[j].substr(spaceIndex + 1);
 				param = trim_space(param);
+				params = split_string(param, ' ');
+				cut_colon_params(params);
 			}
-			execute(_clients[i], command, param);
+			execute(_clients[i], command, params);
 		}
 	}
 }

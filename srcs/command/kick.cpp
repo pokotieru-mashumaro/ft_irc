@@ -2,12 +2,11 @@
 
 #define KICK_SUCCESS(nickname, username, channelname, targetnick, msg) std::string(":" + nickname + "!~" + username + "@localhost KICK " + channelname + " " + targetnick +  " :" + msg)
 
-void Channel::kick(Server *server, Client *client, std::string param)
+void Channel::kick(Server *server, Client *client, std::vector<std::string> params)
 {
     if (!client->isConnected())
         return server->SendMsg2Client(client->getFd(), NOT_CONNECT(client->getNickName()));
-    std::vector<std::string> params = split_string(param, ' ');
-
+        
     if (params.size() != 2 && params.size() != 3)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "KICK"));
 

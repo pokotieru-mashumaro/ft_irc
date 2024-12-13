@@ -3,10 +3,8 @@
 #define QUIT_SUCCESS(nickname, param) std::string("ERROR :Closing connection: " + nickname + "[~@localhost] (" + param + ")")
 #define QUIT_SUCCESS2(nickname, username, param) std::string(":" + nickname + "!~" + username + "@localhost QUIT :" + param)
 
-void Client::quit(Server *server, Client *client, std::string param)
+void Client::quit(Server *server, Client *client, std::vector<std::string> params)
 {
-    std::vector<std::string> params = split_string(param, ' ');
-
     if (params.size() != 0 && params.size() != 1)
         return server->SendMsg2Client(client->getFd(), SYNTAX_ERROR(client->getNickName(), "QUIT"));
     std::string msg = params.size() == 0 ? "" : params[0];

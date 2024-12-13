@@ -32,11 +32,11 @@ public:
 	void setUserName(std::string username){_username = username;}
 	void setRealName(std::string realname){_realname = realname;}
 
-	static void pass(Server *server, Client *client, std::string param);
-	static void nick(Server *server, Client *client, std::string param);
-	static void user(Server *server, Client *client, std::string param);
-	static void privmsg(Server *server, Client *client, std::string param);
-	static void quit(Server *server, Client *client, std::string param);
+	static void pass(Server *server, Client *client, std::vector<std::string> params);
+	static void nick(Server *server, Client *client, std::vector<std::string> params);
+	static void user(Server *server, Client *client, std::vector<std::string> params);
+	static void privmsg(Server *server, Client *client, std::vector<std::string> params);
+	static void quit(Server *server, Client *client, std::vector<std::string> params);
 };
 
 #endif

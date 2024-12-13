@@ -45,12 +45,12 @@ public:
     bool is_invited(std::string nick);
     bool is_mode_adaptation(std::string mode);
 
-    static void join(Server *server, Client *client, std::string param);
-    static void part(Server *server, Client *client, std::string param);
-    static void mode(Server *server, Client *client, std::string param);
-    static void kick(Server *server, Client *client, std::string param);
-    static void invite(Server *server, Client *client, std::string param);
-    static void topic(Server *server, Client *client, std::string param);
+    static void join(Server *server, Client *client, std::vector<std::string> params);
+    static void part(Server *server, Client *client, std::vector<std::string> params);
+    static void mode(Server *server, Client *client, std::vector<std::string> params);
+    static void kick(Server *server, Client *client, std::vector<std::string> params);
+    static void invite(Server *server, Client *client, std::vector<std::string> params);
+    static void topic(Server *server, Client *client, std::vector<std::string> params);
 };
 
 #endif
