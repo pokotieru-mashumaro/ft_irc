@@ -1,6 +1,6 @@
 #include "../../includes/All.hpp"
 
-#define PING_SUCCESS(param) std::string(":" + SERVER_NAME + "PONG " + SERVER_NAME + " :" + param)
+#define PING_SUCCESS(param) std::string(":" + SERVER_NAME + " PONG " + SERVER_NAME + " :" + param)
 
 void Server::ping(Server *server, Client *client, std::vector<std::string> params)
 {
