@@ -1,4 +1,4 @@
-NAME		=	a.out
+NAME		=	ircserv
 SRCS		=	$(wildcard ./srcs/*.cpp) $(wildcard ./srcs/command/*.cpp) $(wildcard ./srcs/utils/*.cpp)
 INC_DIR     =	./includes
 CC          =	c++
