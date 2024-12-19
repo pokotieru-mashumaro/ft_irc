@@ -25,4 +25,5 @@ void Client::quit(Server *server, Client *client, std::vector<std::string> param
         }
     }
     server->ClearClients(client->getFd());
+    delete client;
 }
